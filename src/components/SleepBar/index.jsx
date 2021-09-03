@@ -46,29 +46,43 @@ export default function SleepBar() {
     const incrementTimer = () => {
         console.log(bedtimeStart)
         const paused = !!pauseTime
-        const currentTimeDiff = ( Date.now() - bedtimeStart ) / 1000
+        const currentTimeDiff = (Date.now() - bedtimeStart) / 1000
 
         if (!paused)
             setTimeSinceStart(() => currentTimeDiff - timePaused)
     }
 
     useEffect(() => {
-        if (!bedtimeStart)
-            dispatch( startBedtime( Date.now() ) )
-
-        if (!!pauseTime)
-            clearInterval(timer)
-
-        timer = setInterval(incrementTimer, 1000)
-
         return () => {
             clearInterval(timer)
         }
 
         // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        if (!pauseTime && bedtimeStart) {
+            timer = setInterval(incrementTimer, 1000)
+
+            return
+        }
+
+        clearInterval(timer)
+        // eslint-disable-next-line
     }, [pauseTime])
 
-    console.log(timeSinceStart)
+    useEffect(() => {
+        if (!bedtimeStart) {
+            dispatch(startBedtime(Date.now()))
+            
+            return
+        }
+        
+        timer = setInterval(incrementTimer, 1000)
+        console.log('bedtimeStarted')
+
+        // eslint-disable-next-line
+    }, [bedtimeStart])
 
     return (
         <AppBar position="static">

@@ -1,7 +1,12 @@
-import { HANDLE_ACCORDION_EXPANDED, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER } from "../action_types/bedtime"
+import { HANDLE_ACCORDION_EXPANDED, RESET_BEDTIME_STATE, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER } from "../action_types/bedtime"
 
 export const handleAccordionExpanded = (payload) => ({
     type: HANDLE_ACCORDION_EXPANDED,
+    payload
+})
+
+export const resetBedtimeState = (payload) => ({
+    type: RESET_BEDTIME_STATE,
     payload
 })
 

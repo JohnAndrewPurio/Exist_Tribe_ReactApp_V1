@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import BedtimeSettingsDrawer from '../BedtimeSettingsDrawer'
@@ -9,7 +10,7 @@ import { IconButton, Grid } from '@material-ui/core'
 import { KeyboardArrowUp } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-import { toggleBedtimeDrawer } from '../../redux/actions/bedtime'
+import { resetBedtimeState, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
 
 export default function Bedtime() {
     const classes = useStyles()
@@ -18,6 +19,14 @@ export default function Bedtime() {
     const bedtimeDrawerHandler = (open) => {
         dispatch(toggleBedtimeDrawer(open))
     }
+
+    useEffect(() => {
+        return () => {
+            console.log('bedtime unmounted')
+            dispatch( resetBedtimeState() )
+        }
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>

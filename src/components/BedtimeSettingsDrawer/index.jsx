@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Accordion, AccordionDetails, AccordionSummary, Button, Grid, Paper, SwipeableDrawer, Typography } from '@material-ui/core'
-import { ExpandMore } from '@material-ui/icons'
+import {
+    Accordion, AccordionDetails, AccordionSummary, Button, IconButton, Grid, Paper, Slider, SwipeableDrawer, Typography
+} from '@material-ui/core'
+import { ExpandMore, VolumeMute } from '@material-ui/icons'
 import { useStyles } from './styles'
 
 import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
@@ -37,17 +39,17 @@ export default function BedtimeSettingsDrawer() {
                     <Grid item xs={12} className={classes.itemBlock} >
                         <Grid container justifyContent="center">
                             <Paper className={classes.soundSettings} elevation={2}>
-                                <AccordionMenu 
-                                    name="nightTimeSound" 
-                                    summary="Night Time Sound" 
-                                    details="Some settings" 
-                                    expanded={accordionExpanded} 
+                                <AccordionMenu
+                                    name="nightTimeSound"
+                                    summary="Night Time Sound"
+                                    details="Some settings"
+                                    expanded={accordionExpanded}
                                 />
-                                <AccordionMenu 
-                                    name="wakeTimeSound" 
-                                    summary="Wake Time Sound" 
-                                    details="Some settings" 
-                                    expanded={accordionExpanded} 
+                                <AccordionMenu
+                                    name="wakeTimeSound"
+                                    summary="Wake Time Sound"
+                                    details="Some settings"
+                                    expanded={accordionExpanded}
                                 />
                             </Paper>
                         </Grid>
@@ -100,18 +102,46 @@ function AccordionMenu({ name, details, expanded, summary }) {
                 </Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <Typography>
-                    {details}
-                </Typography>
+                <AccordionMenuContent />
             </AccordionDetails>
         </Accordion>
     )
 }
 
-// function AccordionMenuContent() {
-//     return (
-//         <Grid container>
-            
-//         </Grid>
-//     )
-// }
+function AccordionMenuContent() {
+    const classes = useStyles()
+
+    return (
+        <Grid container>
+            <Grid item xs={12}>
+                <Grid container justifyContent="center">
+                    <Paper className={classes.containerBlock} >
+                        <Grid item>
+                            <IconButton>
+                                <VolumeMute />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs>
+                            <VolumeSlider />
+                        </Grid>
+                    </Paper>
+                </Grid>
+            </Grid>
+        </Grid>
+    )
+}
+
+function VolumeSlider() {
+    return (
+        <Slider
+            w={150}
+            color="primary"
+            defaultValue={0}
+            aria-labelledby="volume-slider"
+            step={1}
+            valueLabelDisplay="auto"
+            marks
+        />
+
+    )
+}

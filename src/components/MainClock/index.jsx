@@ -21,7 +21,7 @@ export default function MainClock() {
 
                 <Grid item xs={12}>
                     <Grid container justifyContent="center">
-                        <ButtonGroup variant="contained" className={classes.shortcutControlsGroup} aria-label="text primary button group">
+                        <ButtonGroup variant="contained" className={classes.shortcutControlsGroup} >
                             <IconButton>
                                 <Brightness2Outlined className={classes.shortcutControls} />
                             </IconButton>
@@ -69,8 +69,6 @@ function CurrentMinutes() {
 
         return () => clearInterval(timer)
     }, [])
-
-    console.log(minutes)
 
     return (
         <Typography variant="h3">

@@ -1,3 +1,5 @@
+
+import UserData from './scenes/UserData' // UI Builder Node Red Integration
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
 
@@ -10,6 +12,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <UserData title="User Data" />
       <Switch>
         <Route path="/startBedtime" component={Bedtime} />
         <Route path="/" component={Home} />

@@ -9,5 +9,23 @@ export const useStyles = makeStyles((theme) => ({
         '& > *': {
             margin: theme.spacing(2)
         }
+    },
+
+    swipeUp: {
+        width: theme.spacing(2),
+        height: theme.spacing(2),
+        animation: `$swipeUpAnimation 1.8s ${theme.transitions.easing.easeInOut} infinite`
+    },
+
+    '@keyframes swipeUpAnimation': {
+        '0%': {
+            transform: 'translateY(0)',
+            opacity: 1
+        },
+
+        '80%, 100%': {
+            transform: 'translateY(-100%)',
+            opacity: 0
+        }
     }
 }))

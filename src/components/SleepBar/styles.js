@@ -4,10 +4,16 @@ export const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+
     menuButton: {
         marginRight: theme.spacing(2),
     },
+
     title: {
         flexGrow: 1,
+    },
+
+    iconButtonColor: {
+        color: theme.palette.primary.contrastText
     },
 }))

@@ -44,7 +44,6 @@ export default function SleepBar() {
     }
 
     const incrementTimer = () => {
-        console.log(bedtimeStart)
         const paused = !!pauseTime
         const currentTimeDiff = (Date.now() - bedtimeStart) / 1000
 
@@ -97,14 +96,14 @@ export default function SleepBar() {
                 <IconButton
                     onClick={pauseOrPlayTimer}
                 >
-                    {!!pauseTime ? <PlayArrow /> : <Pause />}
+                    {!!pauseTime ? <PlayArrow className={classes.iconButtonColor} /> : <Pause className={classes.iconButtonColor} />}
                 </IconButton>
 
                 {/* Stop Bedtime Button */}
                 <IconButton
                     onClick={stopBedtime}
                 >
-                    <Close />
+                    <Close className={classes.iconButtonColor} />
                 </IconButton>
             </Toolbar>
         </AppBar>

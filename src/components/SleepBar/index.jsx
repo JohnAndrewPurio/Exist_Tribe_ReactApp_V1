@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core'
 import { Close, PlayArrow, Pause } from '@material-ui/icons'
 import { useStyles } from './styles'
-import { startBedtime } from '../../redux/actions'
+import { startBedtime } from '../../redux/actions/bedtime'
 
 export default function SleepBar() {
     const classes = useStyles()

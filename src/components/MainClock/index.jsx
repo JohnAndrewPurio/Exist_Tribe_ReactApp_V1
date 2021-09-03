@@ -80,22 +80,21 @@ function CurrentMinutes() {
 }
 
 function TimeOfDay() {
+    const classes = useStyles()
     const date = new Date(Date.now())
     const [timeOfDay, setTimeOfDay] = useState(date.getHours() < 12 ? 'AM' : 'PM')
 
     useEffect(() => {
         const timer = setInterval(() => {
-            const currentHours = new Date(Date.now()).getHours
+            const currentHours = new Date( Date.now() ).getHours()
             setTimeOfDay(currentHours < 12 ? 'AM' : 'PM')
         }, 1000)
 
         return () => clearInterval(timer)
     }, [])
 
-    console.log(timeOfDay)
-
     return (
-        <Typography variant="h3">
+        <Typography className={classes.timeOfDay} variant="h3" >
             {timeOfDay}
         </Typography>
     )

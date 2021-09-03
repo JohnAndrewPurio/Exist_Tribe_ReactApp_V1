@@ -1,4 +1,4 @@
-import { START_BEDTIME } from "./action_types"
+import { START_BEDTIME } from "../action_types/bedtime"
 
 const initState = {
     bedtimeStart: null

@@ -13,6 +13,5 @@ export default function StatusStrip({ type, icon, text }) {
                 </Button>
             </Grid>
         </Grid>
-
     )
 }

@@ -17,6 +17,10 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.dark
     },
 
+    timeOfDay: {
+        margin: theme.spacing(1)
+    },
+
     containerBlock: {
         padding: theme.spacing(1),
         margin: theme.spacing(1)

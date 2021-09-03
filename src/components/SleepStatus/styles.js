@@ -4,7 +4,7 @@ import { containerBlockWidth } from '../../constants'
 export const useStyles = makeStyles((theme) => ({
     paper: {
         width: containerBlockWidth,
-        height: 350,
+        height: 325,
         padding: theme.spacing(2)
     }
 }))

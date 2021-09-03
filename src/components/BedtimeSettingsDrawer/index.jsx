@@ -19,8 +19,6 @@ export default function BedtimeSettingsDrawer() {
         dispatch(toggleBedtimeDrawer(open))
     }
 
-    console.log('accordion:', accordionExpanded)
-
     return (
         <>
             <SwipeableDrawer
@@ -110,10 +108,10 @@ function AccordionMenu({ name, details, expanded, summary }) {
     )
 }
 
-function AccordionMenuContent() {
-    return (
-        <Grid container>
+// function AccordionMenuContent() {
+//     return (
+//         <Grid container>
             
-        </Grid>
-    )
-}
+//         </Grid>
+//     )
+// }

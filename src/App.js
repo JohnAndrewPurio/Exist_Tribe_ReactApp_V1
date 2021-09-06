@@ -24,7 +24,7 @@ import { INIT_REST_NODE, START_BEDTIME } from './scenes/nodeRedTopics'
 
 export default function App() {
   const dispatch = useDispatch()
-  const startBedtime = useSelector(state => state.bedtime.startBedtime)
+  const startBedtime = useSelector(state => state.bedtime.bedtimeStart)
 
   // uibuilder event listeners callbacks
   const onMessage = (payload) => {

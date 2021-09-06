@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
@@ -10,57 +10,61 @@ import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { theme } from './styles'
 
 import { uiBuilderInit, uiBuilderAddListener, uiBuilderSend } from './scenes/uiBuilderReact'
-import { 
+import {
   CONTROL_MESSAGE, ON_MESSAGE, RECEIVED_CONTROL_MESSAGES, RECEIVED_MESSAGES_COUNT,
   SENT_CONTROL_MESSAGE, SENT_CONTROL_MESSAGES_COUNT, SENT_MESSAGE, SENT_MESSAGES_COUNT, IO_CONNECTED, SERVER_TIME_OFFSET
 } from './scenes/uiBuilderReactEvents'
 
-import { controlMessageAction, ioConnectedAction, onMessageAction, receivedControlMessagesAction, receivedMessagesCountAction, 
-  sentControlMessageAction, sentControlMessagesCountAction, sentMessageAction, sentMessagesCountAction, serverTimeOffsetAction 
+import {
+  controlMessageAction, ioConnectedAction, onMessageAction, receivedControlMessagesAction, receivedMessagesCountAction,
+  sentControlMessageAction, sentControlMessagesCountAction, sentMessageAction, sentMessagesCountAction, serverTimeOffsetAction
 } from './redux/actions/nodeRedIntegration'
+
+import { INIT_REST_NODE, START_BEDTIME } from './scenes/nodeRedTopics'
 
 export default function App() {
   const dispatch = useDispatch()
+  const startBedtime = useSelector(state => state.bedtime.startBedtime)
 
   // uibuilder event listeners callbacks
   const onMessage = (payload) => {
-    dispatch( onMessageAction(payload) )
+    dispatch(onMessageAction(payload))
   }
 
   const controlMessage = (payload) => {
-    dispatch( controlMessageAction(payload) )
+    dispatch(controlMessageAction(payload))
   }
 
   const receivedControlMessages = (payload) => {
-    dispatch( receivedControlMessagesAction(payload) )
+    dispatch(receivedControlMessagesAction(payload))
   }
 
   const receivedMessagesCount = (payload) => {
-    dispatch( receivedMessagesCountAction(payload) )
+    dispatch(receivedMessagesCountAction(payload))
   }
 
   const sentControlMessage = (payload) => {
-    dispatch( sentControlMessageAction(payload) )
+    dispatch(sentControlMessageAction(payload))
   }
 
   const sentControlMessagesCount = (payload) => {
-    dispatch( sentControlMessagesCountAction(payload) )
+    dispatch(sentControlMessagesCountAction(payload))
   }
 
   const sentMessage = (payload) => {
-    dispatch( sentMessageAction(payload) )
+    dispatch(sentMessageAction(payload))
   }
 
   const sentMessagesCount = (payload) => {
-    dispatch( sentMessagesCountAction(payload) )
+    dispatch(sentMessagesCountAction(payload))
   }
 
   const ioConnected = (payload) => {
-    dispatch( ioConnectedAction(payload) )
+    dispatch(ioConnectedAction(payload))
   }
 
   const serverTimeOffset = (payload) => {
-    dispatch( serverTimeOffsetAction(payload) )
+    dispatch(serverTimeOffsetAction(payload))
   }
 
   useEffect(() => {
@@ -79,16 +83,25 @@ export default function App() {
     uiBuilderAddListener(IO_CONNECTED, ioConnected)
     uiBuilderAddListener(SERVER_TIME_OFFSET, serverTimeOffset)
 
-    // Test Send command to uibuilder
+    // Initialize REST Node Server in Node-Red
     setTimeout(() => {
-      uiBuilderSend({ 
-        topic: 'uibuilderfe', 
-        payload: 'I am a message sent from the uibuilder front end' 
+      uiBuilderSend({
+        topic: INIT_REST_NODE,
+        payload: false
       })
-    }, 2000)
+
+    }, 1000)
 
     // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    uiBuilderSend({
+      topic: START_BEDTIME,
+      payload: startBedtime
+    })
+
+  }, [startBedtime])
 
   return (
     <ThemeProvider theme={theme}>

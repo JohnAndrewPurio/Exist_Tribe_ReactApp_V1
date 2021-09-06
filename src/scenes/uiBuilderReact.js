@@ -19,5 +19,7 @@ export function uiBuilderAddListener(event, callback) {
 }
 
 export function uiBuilderSend(message) {
+    console.log(message)
+
     send(message)
 }

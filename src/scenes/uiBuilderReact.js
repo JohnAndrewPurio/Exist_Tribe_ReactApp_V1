@@ -19,14 +19,5 @@ export function uiBuilderAddListener(event, callback) {
 }
 
 export function uiBuilderSend(message) {
-    if(!message || typeof message !== 'object')
-        throw new Error('Message object required')
-
-    if(!message.topic)
-        throw new Error('Message object must have a topic property')
-
-    if(!message.payload)
-        throw new Error('Message object must have a payload property')
-
     send(message)
 }

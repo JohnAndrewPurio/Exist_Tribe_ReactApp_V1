@@ -87,7 +87,7 @@ export default function App() {
     setTimeout(() => {
       uiBuilderSend({
         topic: INIT_REST_NODE,
-        payload: false
+        payload: true
       })
 
     }, 1000)

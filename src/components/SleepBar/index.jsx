@@ -78,7 +78,6 @@ export default function SleepBar() {
         }
         
         timer = setInterval(incrementTimer, 1000)
-        console.log('bedtimeStarted')
 
         // eslint-disable-next-line
     }, [bedtimeStart])

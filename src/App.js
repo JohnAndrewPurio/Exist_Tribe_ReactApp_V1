@@ -20,7 +20,7 @@ import {
   sentControlMessageAction, sentControlMessagesCountAction, sentMessageAction, sentMessagesCountAction, serverTimeOffsetAction
 } from './redux/actions/nodeRedIntegration'
 
-import { INIT_REST_NODE, START_BEDTIME } from './scenes/nodeRedTopics'
+import { INIT_REST_NODE_CLIENT, START_BEDTIME } from './scenes/nodeRedTopics'
 
 export default function App() {
   const dispatch = useDispatch()
@@ -86,8 +86,8 @@ export default function App() {
     // Initialize REST Node Server in Node-Red
     setTimeout(() => {
       uiBuilderSend({
-        topic: INIT_REST_NODE,
-        payload: true
+        topic: INIT_REST_NODE_CLIENT,
+        payload: 'Andrew' // Change to username or any human-readable unique identifier
       })
 
     }, 1000)

@@ -8,6 +8,7 @@ import sleepConfiguration from "./reducers/sleepConfiguration"
 
 const reducers = combineReducers({
     bedtime, sleepConfiguration
+
 })
 
 export const store = createStore(reducers, applyMiddleware(logger, thunk)) // For troubleshooting, comment out when sending to production

@@ -2,14 +2,23 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
-    Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, SwipeableDrawer, Switch, Typography
+    Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, SwipeableDrawer, Typography
 } from '@material-ui/core'
-import { Brightness2Outlined, ExpandMore, VolumeMute, WbSunnyOutlined } from '@material-ui/icons'
+import { 
+    // Brightness1Outlined, 
+    Brightness2Outlined, 
+    // Brightness3Outlined, 
+    // Brightness4Outlined, 
+    // Brightness5Outlined, 
+    // Brightness6Outlined,
+    ExpandMore, VolumeMute, WbSunnyOutlined 
+} from '@material-ui/icons'
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import { useStyles } from './styles'
 
 import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
+import { nightTimeSoundVolumeAction } from '../../redux/actions/sleepConfiguration'
 
 const sleepConfigurations = [
     {
@@ -32,7 +41,7 @@ const sleepConfigurations = [
 
     {
         name: "nightTimeSound",
-        content: <SoundAdjustments />,
+        content: <SoundAdjustments settingName="nightTimeSound" />,
         details: "Some settings",
         icon: <ExpandMore />,
         summary: "Night Time Sound"
@@ -40,7 +49,7 @@ const sleepConfigurations = [
 
     {
         name: "wakeTimeSound",
-        content: <SoundAdjustments />,
+        content: <SoundAdjustments settingName="wakeTimeSound" />,
         details: "Some settings",
         icon: <ExpandMore />,
         summary: "Wake Time Sound"
@@ -66,7 +75,6 @@ const sleepConfigurations = [
         icon: <WbSunnyOutlined />,
         summary: "Wake Light"
     },
-
 ]
 
 export default function BedtimeSettingsDrawer() {
@@ -98,7 +106,7 @@ export default function BedtimeSettingsDrawer() {
                                     sleepConfigurations.map(config => {
                                         const { name } = config
 
-                                        if(config.divider) {
+                                        if (config.divider) {
                                             return (
                                                 <SectionDivider key={name} sectionName={name} />
                                             )
@@ -129,7 +137,7 @@ function SectionDivider({ sectionName }) {
 
     return (
         <div className={classes.sectionDivider} >
-            <Typography variant="h6" className={classes.sectionText} >{ sectionName }</Typography>
+            <Typography variant="h6" className={classes.sectionText} >{sectionName}</Typography>
             <Divider className={classes.divider} />
         </div>
     )
@@ -173,7 +181,7 @@ function AccordionMenu({ config, expanded }) {
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    const { name, details, summary, content, icon } = config
+    const { name, summary, content, icon } = config
 
     const accordionHandler = (targetAccordion) => {
         // Collapse the target accordion if it is already Expanded
@@ -203,7 +211,7 @@ function AccordionMenu({ config, expanded }) {
     )
 }
 
-function SoundAdjustments() {
+function SoundAdjustments({ settingName }) {
     const classes = useStyles()
     return (
         <Grid container>
@@ -216,7 +224,7 @@ function SoundAdjustments() {
                             </IconButton>
                         </Grid>
                         <Grid item xs>
-                            <VolumeSlider />
+                            <VolumeSlider settingName={settingName} />
                         </Grid>
                     </Paper>
                 </Grid>
@@ -225,7 +233,14 @@ function SoundAdjustments() {
     )
 }
 
-function VolumeSlider() {
+function VolumeSlider({ settingName }) {
+    const dispatch = useDispatch()
+
+    const sliderValueHandler = (event, value) => {
+        if(settingName === 'nightTimeSound')
+            dispatch( nightTimeSoundVolumeAction(value) )
+    }
+
     return (
         <Slider
             w={150}
@@ -235,15 +250,24 @@ function VolumeSlider() {
             step={1}
             valueLabelDisplay="auto"
             marks
+            onChange={sliderValueHandler}
         />
-
     )
 }
 
 function LightAdjustments() {
+    const classes = useStyles()
+
     return (
-        <>
-            Test
-        </>
+        <Paper className={classes.containerBlock} >
+            <Grid item>
+                <IconButton>
+                    <VolumeMute />
+                </IconButton>
+            </Grid>
+            <Grid item xs>
+                <VolumeSlider />
+            </Grid>
+        </Paper>
     )
 }

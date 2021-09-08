@@ -1,8 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import { containerBlockWidth } from '../../constants'
 
-console.log(containerBlockWidth)
-
 export const useStyles = makeStyles((theme) => ({
     accordionMenu: {
         backgroundColor: theme.palette.primary.main,

@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
-    Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, SwipeableDrawer, Typography
+    Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, SwipeableDrawer, Switch, Typography
 } from '@material-ui/core'
-import { ExpandMore, VolumeMute } from '@material-ui/icons'
+import { Brightness2Outlined, ExpandMore, VolumeMute, WbSunnyOutlined } from '@material-ui/icons'
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import { useStyles } from './styles'
@@ -13,40 +13,60 @@ import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/action
 
 const sleepConfigurations = [
     {
-        name: 'Sleep Amount Configuration',
-        divider: true
+        divider: true,
+        name: 'Sleep Amount Configuration'
     },
 
     {
         name: "wakeOrSleepTime",
-        summary: "Wake Or Sleep Time",
+        content: <WakeOrSleepTimeSelection />,
         details: "Some settings",
-        content: <WakeOrSleepTimeSelection />
+        icon: <ExpandMore />,
+        summary: "Wake Or Sleep Time"
     },
 
     {
-        name: 'Sleep Sounds Configuration',
-        divider: true
+        divider: true,
+        name: 'Sleep Sounds Configuration'
     },
 
     {
         name: "nightTimeSound",
-        summary: "Night Time Sound",
+        content: <SoundAdjustments />,
         details: "Some settings",
-        content: <SoundAdjustments />
+        icon: <ExpandMore />,
+        summary: "Night Time Sound"
     },
 
     {
         name: "wakeTimeSound",
-        summary: "Wake Time Sound",
+        content: <SoundAdjustments />,
         details: "Some settings",
-        content: <SoundAdjustments />
+        icon: <ExpandMore />,
+        summary: "Wake Time Sound"
     },
 
     {
         name: 'Sleep Lights Configuration',
         divider: true
     },
+
+    {
+        name: "nightLight",
+        content: <LightAdjustments />,
+        details: "Some settings",
+        icon: <Brightness2Outlined />,
+        summary: "Night Light"
+    },
+
+    {
+        name: "wakeLight",
+        content: <LightAdjustments />,
+        details: "Some settings",
+        icon: <WbSunnyOutlined />,
+        summary: "Wake Light"
+    },
+
 ]
 
 export default function BedtimeSettingsDrawer() {
@@ -153,7 +173,7 @@ function AccordionMenu({ config, expanded }) {
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    const { name, details, summary, content } = config
+    const { name, details, summary, content, icon } = config
 
     const accordionHandler = (targetAccordion) => {
         // Collapse the target accordion if it is already Expanded
@@ -170,7 +190,7 @@ function AccordionMenu({ config, expanded }) {
             onChange={() => accordionHandler(name)}
         >
             <AccordionSummary
-                expandIcon={<ExpandMore />}
+                expandIcon={icon}
             >
                 <Typography className={classes.upperCase} variant="subtitle1">
                     {summary}
@@ -217,5 +237,13 @@ function VolumeSlider() {
             marks
         />
 
+    )
+}
+
+function LightAdjustments() {
+    return (
+        <>
+            Test
+        </>
     )
 }

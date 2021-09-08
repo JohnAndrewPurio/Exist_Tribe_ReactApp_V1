@@ -9,6 +9,12 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText
     },
 
+    divider: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        backgroundColor: theme.palette.primary.contrastText
+    },
+
     soundSettings: {
         width: containerBlockWidth,
         padding: theme.spacing(2),

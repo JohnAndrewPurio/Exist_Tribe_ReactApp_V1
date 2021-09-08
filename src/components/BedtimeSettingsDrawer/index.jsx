@@ -5,83 +5,89 @@ import {
     Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, SwipeableDrawer, Typography
 } from '@material-ui/core'
 import { 
-    // Brightness1Outlined, 
-    Brightness2Outlined, 
-    // Brightness3Outlined, 
-    // Brightness4Outlined, 
-    // Brightness5Outlined, 
-    // Brightness6Outlined,
-    ExpandMore, VolumeMute, WbSunnyOutlined 
+    Brightness1Outlined, Brightness2Outlined, Brightness3Outlined, 
+    Brightness4Outlined, Brightness5Outlined, Brightness6Outlined,
+    ExpandMore, 
+    VolumeDown, VolumeMute, VolumeUp,
+    WbSunnyOutlined 
 } from '@material-ui/icons'
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import { useStyles } from './styles'
 
 import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
-import { nightTimeSoundVolumeAction } from '../../redux/actions/sleepConfiguration'
-
-const sleepConfigurations = [
-    {
-        divider: true,
-        name: 'Sleep Amount Configuration'
-    },
-
-    {
-        name: "wakeOrSleepTime",
-        content: <WakeOrSleepTimeSelection />,
-        details: "Some settings",
-        icon: <ExpandMore />,
-        summary: "Wake Or Sleep Time"
-    },
-
-    {
-        divider: true,
-        name: 'Sleep Sounds Configuration'
-    },
-
-    {
-        name: "nightTimeSound",
-        content: <SoundAdjustments settingName="nightTimeSound" />,
-        details: "Some settings",
-        icon: <ExpandMore />,
-        summary: "Night Time Sound"
-    },
-
-    {
-        name: "wakeTimeSound",
-        content: <SoundAdjustments settingName="wakeTimeSound" />,
-        details: "Some settings",
-        icon: <ExpandMore />,
-        summary: "Wake Time Sound"
-    },
-
-    {
-        name: 'Sleep Lights Configuration',
-        divider: true
-    },
-
-    {
-        name: "nightLight",
-        content: <LightAdjustments />,
-        details: "Some settings",
-        icon: <Brightness2Outlined />,
-        summary: "Night Light"
-    },
-
-    {
-        name: "wakeLight",
-        content: <LightAdjustments />,
-        details: "Some settings",
-        icon: <WbSunnyOutlined />,
-        summary: "Wake Light"
-    },
-]
+import { 
+    nightLightBrightnessAction, nightTimeSoundVolumeAction, wakeLightBrightnessAction, wakeTimeSoundVolumeAction 
+} from '../../redux/actions/sleepConfiguration'
 
 export default function BedtimeSettingsDrawer() {
     const classes = useStyles()
     const dispatch = useDispatch()
-    const drawerState = useSelector(state => state.bedtime.bedtimeDrawerExpanded)
+    
     const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
+    const drawerState = useSelector(state => state.bedtime.bedtimeDrawerExpanded)
+    const nightLightBrightnessLevel = useSelector(state => state.sleepConfiguration.nightLightBrightnessLevel)
+    const nightTimeSoundVolumeLevel = useSelector(state => state.sleepConfiguration.nightTimeSoundVolumeLevel)
+    const wakeLightBrightnessLevel = useSelector(state => state.sleepConfiguration.wakeLightBrightnessLevel)
+    const wakeTimeSoundVolumeLevel = useSelector(state => state.sleepConfiguration.wakeTimeSoundVolumeLevel)
+
+    const sleepConfigurations = [
+        {
+            divider: true,
+            name: 'Sleep Amount Configuration'
+        },
+    
+        {
+            name: "wakeOrSleepTime",
+            content: <WakeOrSleepTimeSelection />,
+            details: "Some settings",
+            icon: <ExpandMore className={classes.icon} />,
+            summary: "Wake Or Sleep Time"
+        },
+    
+        {
+            divider: true,
+            name: 'Sleep Sounds Configuration'
+        },
+    
+        {
+            name: "nightTimeSound",
+            content: <SoundAdjustments settingName="nightTimeSound" iconState={nightTimeSoundVolumeLevel} />,
+            details: "Some settings",
+            icon: <ExpandMore className={classes.icon} />,
+            summary: "Night Time Sound"
+        },
+    
+        {
+            name: "wakeTimeSound",
+            content: <SoundAdjustments settingName="wakeTimeSound" iconState={wakeTimeSoundVolumeLevel} />,
+            details: "Some settings",
+            icon: <ExpandMore className={classes.icon} />,
+            summary: "Wake Time Sound"
+        },
+    
+        {
+            name: 'Sleep Lights Configuration',
+            divider: true
+        },
+    
+        {
+            name: "nightLight",
+            content: <LightAdjustments settingName="nightLight" iconState={nightLightBrightnessLevel} />,
+            details: "Some settings",
+            icon: <Brightness2Outlined className={classes.icon} />,
+            summary: "Night Light"
+        },
+    
+        {
+            name: "wakeLight",
+            content: <LightAdjustments settingName="wakeLight" iconState={wakeLightBrightnessLevel} />,
+            details: "Some settings",
+            icon: <WbSunnyOutlined className={classes.icon} />,
+            summary: "Wake Light"
+        }
+    ]
+
 
     const toggleDrawer = (open) => {
         if (open === undefined)
@@ -211,8 +217,14 @@ function AccordionMenu({ config, expanded }) {
     )
 }
 
-function SoundAdjustments({ settingName }) {
+function SoundAdjustments({ settingName, iconState }) {
     const classes = useStyles()
+    const volumeIcons = {
+        low: <VolumeMute className={classes.icon} />,
+        medium: <VolumeDown className={classes.icon} />,
+        high: <VolumeUp className={classes.icon} />,
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -220,7 +232,7 @@ function SoundAdjustments({ settingName }) {
                     <Paper className={classes.containerBlock} >
                         <Grid item>
                             <IconButton>
-                                <VolumeMute />
+                                {volumeIcons[iconState]}
                             </IconButton>
                         </Grid>
                         <Grid item xs>
@@ -237,8 +249,27 @@ function VolumeSlider({ settingName }) {
     const dispatch = useDispatch()
 
     const sliderValueHandler = (event, value) => {
-        if(settingName === 'nightTimeSound')
-            dispatch( nightTimeSoundVolumeAction(value) )
+        switch(settingName) {
+            case 'nightTimeSound':
+                dispatch( nightTimeSoundVolumeAction(value) )
+                break
+
+            case 'wakeTimeSound':
+                dispatch( wakeTimeSoundVolumeAction(value) )
+                break
+
+            case 'wakeLight':
+                dispatch( wakeLightBrightnessAction(value) )
+                break
+
+            case 'nightLight':
+                dispatch( nightLightBrightnessAction(value) )
+                break
+
+            default: 
+                return
+        }
+
     }
 
     return (
@@ -255,18 +286,32 @@ function VolumeSlider({ settingName }) {
     )
 }
 
-function LightAdjustments() {
+function LightAdjustments({ settingName, iconState }) {
     const classes = useStyles()
+
+    const nightLightIcons = {
+        low: <Brightness3Outlined className={classes.icon} />,
+        medium: <Brightness2Outlined className={classes.icon} />,
+        high: <Brightness1Outlined className={classes.icon} />,
+    }
+
+    const wakeLightIcons = {
+        low: <Brightness4Outlined className={classes.icon} />,
+        medium: <Brightness6Outlined className={classes.icon} />,
+        high: <Brightness5Outlined className={classes.icon} />,
+    }
+
+    const icons = settingName === 'nightLight' ? nightLightIcons: wakeLightIcons
 
     return (
         <Paper className={classes.containerBlock} >
             <Grid item>
                 <IconButton>
-                    <VolumeMute />
+                    {icons[iconState]}
                 </IconButton>
             </Grid>
             <Grid item xs>
-                <VolumeSlider />
+                <VolumeSlider settingName={settingName} />
             </Grid>
         </Paper>
     )

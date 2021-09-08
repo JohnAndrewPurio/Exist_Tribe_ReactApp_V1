@@ -1,6 +1,3 @@
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
 

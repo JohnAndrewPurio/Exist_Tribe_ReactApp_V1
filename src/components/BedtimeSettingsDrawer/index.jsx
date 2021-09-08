@@ -15,9 +15,12 @@ import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns'
 import { useStyles } from './styles'
 
+import { levels } from '../../constants'
 import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
 import { 
-    nightLightBrightnessAction, nightTimeSoundVolumeAction, wakeLightBrightnessAction, wakeTimeSoundVolumeAction 
+    nightLightBrightnessAction, nightLightBrightnessLevelAction, 
+    nightTimeSoundVolumeAction, nightTimeSoundVolumeLevelAction,
+    wakeLightBrightnessAction, wakeLightBrightnessLevelAction, wakeTimeSoundVolumeAction 
 } from '../../redux/actions/sleepConfiguration'
 
 export default function BedtimeSettingsDrawer() {
@@ -219,10 +222,23 @@ function AccordionMenu({ config, expanded }) {
 
 function SoundAdjustments({ settingName, iconState }) {
     const classes = useStyles()
+    const dispatch = useDispatch()
     const volumeIcons = {
         low: <VolumeMute className={classes.icon} />,
         medium: <VolumeDown className={classes.icon} />,
         high: <VolumeUp className={classes.icon} />,
+    }
+
+    const volumeAdjust = () => {
+        const nextLevel = levels.indexOf(iconState) + 1
+        const levelValue = nextLevel === levels.length ? 0: nextLevel 
+
+        if(settingName === 'nightTimeSound') 
+            dispatch( nightTimeSoundVolumeLevelAction( levelValue ) )
+
+        // Replace tomorrow
+        if(settingName === 'wakeTimeSound') 
+            dispatch( wakeLightBrightnessLevelAction( levelValue ) )
     }
 
     return (
@@ -231,7 +247,7 @@ function SoundAdjustments({ settingName, iconState }) {
                 <Grid container justifyContent="center">
                     <Paper className={classes.containerBlock} >
                         <Grid item>
-                            <IconButton>
+                            <IconButton onClick={volumeAdjust}>
                                 {volumeIcons[iconState]}
                             </IconButton>
                         </Grid>
@@ -247,6 +263,15 @@ function SoundAdjustments({ settingName, iconState }) {
 
 function VolumeSlider({ settingName }) {
     const dispatch = useDispatch()
+    const currentSliderValue = useSelector(state => {
+        console.log(settingName)
+
+        return state.sleepConfiguration[ 
+            // Checks if the value to be retrieved is Brightness or Volume
+            RegExp('Light').test(settingName) ? `${settingName}Brightness`
+                :  `${settingName}Volume`
+        ]
+    })
 
     const sliderValueHandler = (event, value) => {
         switch(settingName) {
@@ -282,12 +307,14 @@ function VolumeSlider({ settingName }) {
             valueLabelDisplay="auto"
             marks
             onChange={sliderValueHandler}
+            value={currentSliderValue}
         />
     )
 }
 
 function LightAdjustments({ settingName, iconState }) {
     const classes = useStyles()
+    const dispatch = useDispatch()
 
     const nightLightIcons = {
         low: <Brightness3Outlined className={classes.icon} />,
@@ -303,10 +330,21 @@ function LightAdjustments({ settingName, iconState }) {
 
     const icons = settingName === 'nightLight' ? nightLightIcons: wakeLightIcons
 
+    const brightnessAdjust = () => {
+        const nextLevel = levels.indexOf(iconState) + 1
+        const levelValue = nextLevel === levels.length ? 0: nextLevel 
+
+        if(settingName === 'nightLight') 
+            dispatch( nightLightBrightnessLevelAction( levelValue ) )
+
+        if(settingName === 'wakeLight') 
+            dispatch( wakeLightBrightnessLevelAction( levelValue ) )
+    }
+
     return (
         <Paper className={classes.containerBlock} >
             <Grid item>
-                <IconButton>
+                <IconButton onClick={brightnessAdjust} >
                     {icons[iconState]}
                 </IconButton>
             </Grid>

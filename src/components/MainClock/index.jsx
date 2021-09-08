@@ -1,11 +1,46 @@
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Brightness2Outlined, Brightness7, MusicNoteOutlined } from '@material-ui/icons'
+import { 
+    Brightness1Outlined, Brightness2Outlined, Brightness3Outlined, 
+    Brightness4Outlined, Brightness5Outlined, Brightness6Outlined, 
+    MusicNoteOutlined 
+} from '@material-ui/icons'
 import { ButtonGroup, IconButton, Grid, Paper, Typography } from '@material-ui/core'
 import { useStyles } from './styles'
 
+import { levels } from '../../constants'
+import { nightLightBrightnessLevelAction, wakeLightBrightnessLevelAction } from '../../redux/actions/sleepConfiguration'
+
 export default function MainClock() {
     const classes = useStyles()
+    const dispatch = useDispatch()
+    const nightLightBrightnessLevel = useSelector(state => state.sleepConfiguration.nightLightBrightnessLevel)
+    const wakeLightBrightnessLevel = useSelector(state => state.sleepConfiguration.wakeLightBrightnessLevel)
+
+    const nightLightIcons = {
+        low: <Brightness3Outlined className={classes.shortcutControls} />,
+        medium: <Brightness2Outlined className={classes.shortcutControls} />,
+        high: <Brightness1Outlined className={classes.shortcutControls} />,
+    }
+
+    const wakeLightIcons = {
+        low: <Brightness4Outlined className={classes.shortcutControls} />,
+        medium: <Brightness6Outlined className={classes.shortcutControls} />,
+        high: <Brightness5Outlined className={classes.shortcutControls} />,
+    }
+
+    const brightnessAdjust = (light) => {
+        const nextLevel = levels.indexOf(light === 'nightLight' ? nightLightBrightnessLevel: wakeLightBrightnessLevel) + 1
+        const levelValue = nextLevel === levels.length ? 0: nextLevel 
+
+        if(light === 'nightLight') 
+            dispatch( nightLightBrightnessLevelAction( levelValue ) )
+
+        if(light === 'wakeLight') 
+            dispatch( wakeLightBrightnessLevelAction( levelValue ) )
+    }
+
 
     return (
         <Paper elevation={3} className={classes.paper} >
@@ -22,11 +57,11 @@ export default function MainClock() {
                 <Grid item xs={12}>
                     <Grid container justifyContent="center">
                         <ButtonGroup variant="contained" className={classes.shortcutControlsGroup} >
-                            <IconButton>
-                                <Brightness2Outlined className={classes.shortcutControls} />
+                            <IconButton onClick={ () => brightnessAdjust('nightLight') }>
+                                { nightLightIcons[nightLightBrightnessLevel] }
                             </IconButton>
-                            <IconButton>
-                                <Brightness7 className={classes.shortcutControls} />
+                            <IconButton onClick={ () => brightnessAdjust('wakeLight') } >
+                                { wakeLightIcons[wakeLightBrightnessLevel] } 
                             </IconButton>
                             <IconButton>
                                 <MusicNoteOutlined className={classes.shortcutControls} />

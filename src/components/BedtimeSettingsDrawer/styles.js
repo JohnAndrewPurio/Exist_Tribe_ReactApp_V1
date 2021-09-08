@@ -13,6 +13,10 @@ export const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.contrastText
     },
 
+    icon: {
+        color: theme.palette.primary.contrastText
+    },
+
     sectionDivider: {
         marginTop: theme.spacing(2),
         color: theme.palette.primary.contrastText,
@@ -39,7 +43,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     drawer: {
-        height: 1.5 * containerBlockWidth,
+        maxHeight: 1.5 * containerBlockWidth,
         overflowY: 'auto'
     },
 

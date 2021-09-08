@@ -13,6 +13,11 @@ import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/action
 
 const sleepConfigurations = [
     {
+        name: 'Sleep Amount Configuration',
+        divider: true
+    },
+
+    {
         name: "wakeOrSleepTime",
         summary: "Wake Or Sleep Time",
         details: "Some settings",
@@ -20,6 +25,7 @@ const sleepConfigurations = [
     },
 
     {
+        name: 'Sleep Sounds Configuration',
         divider: true
     },
 
@@ -35,7 +41,12 @@ const sleepConfigurations = [
         summary: "Wake Time Sound",
         details: "Some settings",
         content: <SoundAdjustments />
-    }
+    },
+
+    {
+        name: 'Sleep Lights Configuration',
+        divider: true
+    },
 ]
 
 export default function BedtimeSettingsDrawer() {
@@ -65,11 +76,17 @@ export default function BedtimeSettingsDrawer() {
                             <Paper className={classes.soundSettings} elevation={2}>
                                 {
                                     sleepConfigurations.map(config => {
-                                        if(config.divider)
-                                            return (<Divider className={classes.divider} />)
+                                        const { name } = config
+
+                                        if(config.divider) {
+                                            return (
+                                                <SectionDivider key={name} sectionName={name} />
+                                            )
+                                        }
 
                                         return (
                                             <AccordionMenu
+                                                key={name}
                                                 config={config}
                                                 expanded={accordionExpanded}
                                             />
@@ -84,6 +101,17 @@ export default function BedtimeSettingsDrawer() {
                 </Grid>
             </SwipeableDrawer>
         </>
+    )
+}
+
+function SectionDivider({ sectionName }) {
+    const classes = useStyles()
+
+    return (
+        <div className={classes.sectionDivider} >
+            <Typography variant="h6" className={classes.sectionText} >{ sectionName }</Typography>
+            <Divider className={classes.divider} />
+        </div>
     )
 }
 
@@ -125,8 +153,6 @@ function AccordionMenu({ config, expanded }) {
     const classes = useStyles()
     const dispatch = useDispatch()
 
-    console.log('---Name---')
-    console.log(config.name)
     const { name, details, summary, content } = config
 
     const accordionHandler = (targetAccordion) => {

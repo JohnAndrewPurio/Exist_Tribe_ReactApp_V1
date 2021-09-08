@@ -6,13 +6,23 @@ console.log(containerBlockWidth)
 export const useStyles = makeStyles((theme) => ({
     accordionMenu: {
         backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText
+        color: theme.palette.primary.contrastText,
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
     },
 
     divider: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2),
         backgroundColor: theme.palette.primary.contrastText
+    },
+
+    sectionDivider: {
+        marginTop: theme.spacing(2),
+        color: theme.palette.primary.contrastText,
+        marginBottom: theme.spacing(2)
+    },
+
+    sectionText: {
+        opacity: 0.8
     },
 
     soundSettings: {

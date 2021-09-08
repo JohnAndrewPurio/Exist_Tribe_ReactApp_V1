@@ -24,7 +24,7 @@ export const useStyles = makeStyles((theme) => ({
         },
 
         '80%, 100%': {
-            transform: 'translateY(-100%)',
+            transform: 'translateY(-50%)',
             opacity: 0
         }
     }

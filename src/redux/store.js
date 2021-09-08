@@ -4,10 +4,11 @@ import logger from 'redux-logger' // For troubleshooting, comment out when sendi
 import thunk from 'redux-thunk'
 
 import bedtime from "./reducers/bedtime"
-import nodeRedIntegration from "./reducers/nodeRedIntegration"
+import sleepConfiguration from "./reducers/sleepConfiguration"
 
 const reducers = combineReducers({
-    bedtime, nodeRedIntegration
+    bedtime, sleepConfiguration
+
 })
 
 export const store = createStore(reducers, applyMiddleware(logger, thunk)) // For troubleshooting, comment out when sending to production

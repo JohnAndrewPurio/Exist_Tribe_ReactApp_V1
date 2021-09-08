@@ -1,12 +1,81 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
-    Accordion, AccordionDetails, AccordionSummary, Button, IconButton, Grid, Paper, Slider, SwipeableDrawer, Typography
+    Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, SwipeableDrawer, Typography
 } from '@material-ui/core'
-import { ExpandMore, VolumeMute } from '@material-ui/icons'
+import { 
+    // Brightness1Outlined, 
+    Brightness2Outlined, 
+    // Brightness3Outlined, 
+    // Brightness4Outlined, 
+    // Brightness5Outlined, 
+    // Brightness6Outlined,
+    ExpandMore, VolumeMute, WbSunnyOutlined 
+} from '@material-ui/icons'
+import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 import { useStyles } from './styles'
 
 import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
+import { nightTimeSoundVolumeAction } from '../../redux/actions/sleepConfiguration'
+
+const sleepConfigurations = [
+    {
+        divider: true,
+        name: 'Sleep Amount Configuration'
+    },
+
+    {
+        name: "wakeOrSleepTime",
+        content: <WakeOrSleepTimeSelection />,
+        details: "Some settings",
+        icon: <ExpandMore />,
+        summary: "Wake Or Sleep Time"
+    },
+
+    {
+        divider: true,
+        name: 'Sleep Sounds Configuration'
+    },
+
+    {
+        name: "nightTimeSound",
+        content: <SoundAdjustments settingName="nightTimeSound" />,
+        details: "Some settings",
+        icon: <ExpandMore />,
+        summary: "Night Time Sound"
+    },
+
+    {
+        name: "wakeTimeSound",
+        content: <SoundAdjustments settingName="wakeTimeSound" />,
+        details: "Some settings",
+        icon: <ExpandMore />,
+        summary: "Wake Time Sound"
+    },
+
+    {
+        name: 'Sleep Lights Configuration',
+        divider: true
+    },
+
+    {
+        name: "nightLight",
+        content: <LightAdjustments />,
+        details: "Some settings",
+        icon: <Brightness2Outlined />,
+        summary: "Night Light"
+    },
+
+    {
+        name: "wakeLight",
+        content: <LightAdjustments />,
+        details: "Some settings",
+        icon: <WbSunnyOutlined />,
+        summary: "Wake Light"
+    },
+]
 
 export default function BedtimeSettingsDrawer() {
     const classes = useStyles()
@@ -30,27 +99,30 @@ export default function BedtimeSettingsDrawer() {
                 onOpen={() => toggleDrawer(true)}
             >
                 <Grid container className={classes.drawer} >
-                    <Grid item xs={12} className={classes.itemBlock}>
-                        <Grid container justifyContent="center">
-                            <WakeOrSleepTimeSelection />
-                        </Grid>
-                    </Grid>
-
                     <Grid item xs={12} className={classes.itemBlock} >
                         <Grid container justifyContent="center">
                             <Paper className={classes.soundSettings} elevation={2}>
-                                <AccordionMenu
-                                    name="nightTimeSound"
-                                    summary="Night Time Sound"
-                                    details="Some settings"
-                                    expanded={accordionExpanded}
-                                />
-                                <AccordionMenu
-                                    name="wakeTimeSound"
-                                    summary="Wake Time Sound"
-                                    details="Some settings"
-                                    expanded={accordionExpanded}
-                                />
+                                {
+                                    sleepConfigurations.map(config => {
+                                        const { name } = config
+
+                                        if (config.divider) {
+                                            return (
+                                                <SectionDivider key={name} sectionName={name} />
+                                            )
+                                        }
+
+                                        return (
+                                            <AccordionMenu
+                                                key={name}
+                                                config={config}
+                                                expanded={accordionExpanded}
+                                            />
+                                        )
+                                    }
+
+                                    )
+                                }
                             </Paper>
                         </Grid>
                     </Grid>
@@ -60,25 +132,56 @@ export default function BedtimeSettingsDrawer() {
     )
 }
 
-function WakeOrSleepTimeSelection() {
+function SectionDivider({ sectionName }) {
     const classes = useStyles()
 
     return (
-        <Paper className={classes.containerBlock} elevation={2} >
-            <Button variant="contained" color="primary">
-                Wake Time
-            </Button>
+        <div className={classes.sectionDivider} >
+            <Typography variant="h6" className={classes.sectionText} >{sectionName}</Typography>
+            <Divider className={classes.divider} />
+        </div>
+    )
+}
 
-            <Button variant="contained" color="primary">
-                Sleep Time
-            </Button>
+function WakeOrSleepTimeSelection() {
+    return (
+        <Paper>
+            <Grid container justifyContent="center" >
+                <TimePicker label="Wake Time" />
+                <TimePicker label="Sleep Time" />
+            </Grid>
         </Paper>
     )
 }
 
-function AccordionMenu({ name, details, expanded, summary }) {
+function TimePicker({ label }) {
+    const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
+    return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardTimePicker
+                margin="normal"
+                id={label}
+                label={label}
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                }}
+            />
+        </MuiPickersUtilsProvider>
+    )
+}
+
+function AccordionMenu({ config, expanded }) {
     const classes = useStyles()
     const dispatch = useDispatch()
+
+    const { name, summary, content, icon } = config
 
     const accordionHandler = (targetAccordion) => {
         // Collapse the target accordion if it is already Expanded
@@ -95,22 +198,21 @@ function AccordionMenu({ name, details, expanded, summary }) {
             onChange={() => accordionHandler(name)}
         >
             <AccordionSummary
-                expandIcon={<ExpandMore />}
+                expandIcon={icon}
             >
                 <Typography className={classes.upperCase} variant="subtitle1">
                     {summary}
                 </Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <AccordionMenuContent />
+                {content}
             </AccordionDetails>
         </Accordion>
     )
 }
 
-function AccordionMenuContent() {
+function SoundAdjustments({ settingName }) {
     const classes = useStyles()
-
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -122,7 +224,7 @@ function AccordionMenuContent() {
                             </IconButton>
                         </Grid>
                         <Grid item xs>
-                            <VolumeSlider />
+                            <VolumeSlider settingName={settingName} />
                         </Grid>
                     </Paper>
                 </Grid>
@@ -131,7 +233,14 @@ function AccordionMenuContent() {
     )
 }
 
-function VolumeSlider() {
+function VolumeSlider({ settingName }) {
+    const dispatch = useDispatch()
+
+    const sliderValueHandler = (event, value) => {
+        if(settingName === 'nightTimeSound')
+            dispatch( nightTimeSoundVolumeAction(value) )
+    }
+
     return (
         <Slider
             w={150}
@@ -141,7 +250,24 @@ function VolumeSlider() {
             step={1}
             valueLabelDisplay="auto"
             marks
+            onChange={sliderValueHandler}
         />
+    )
+}
 
+function LightAdjustments() {
+    const classes = useStyles()
+
+    return (
+        <Paper className={classes.containerBlock} >
+            <Grid item>
+                <IconButton>
+                    <VolumeMute />
+                </IconButton>
+            </Grid>
+            <Grid item xs>
+                <VolumeSlider />
+            </Grid>
+        </Paper>
     )
 }

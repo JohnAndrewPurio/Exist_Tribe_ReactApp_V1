@@ -3,7 +3,7 @@ import NavBar from '../NavBar'
 import { useHistory } from 'react-router-dom'
 
 import { Fab } from '@material-ui/core'
-import { Navigation } from '@material-ui/icons'
+import { NightsStayOutlined } from '@material-ui/icons'
 import { useStyles } from './styles'
 
 import { uiBuilderSend } from '../../scenes/uiBuilderReact'
@@ -26,7 +26,7 @@ export default function Home() {
                 color="primary"
                 onClick={startBedtime}
             >
-                <Navigation className={classes.extendedIcon} />
+                <NightsStayOutlined className={classes.extendedIcon} />
                 Start Bedtime
             </Fab>
         </>

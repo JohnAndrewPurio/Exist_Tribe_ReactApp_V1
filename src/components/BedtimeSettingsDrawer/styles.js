@@ -1,12 +1,30 @@
 import { makeStyles } from '@material-ui/core'
 import { containerBlockWidth } from '../../constants'
 
-console.log(containerBlockWidth)
-
 export const useStyles = makeStyles((theme) => ({
     accordionMenu: {
         backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2)
+    },
+
+    divider: {
+        backgroundColor: theme.palette.primary.contrastText
+    },
+
+    icon: {
         color: theme.palette.primary.contrastText
+    },
+
+    sectionDivider: {
+        marginTop: theme.spacing(2),
+        color: theme.palette.primary.contrastText,
+        marginBottom: theme.spacing(2)
+    },
+
+    sectionText: {
+        opacity: 0.8
     },
 
     soundSettings: {
@@ -25,7 +43,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     drawer: {
-        height: 1.5 * containerBlockWidth,
+        maxHeight: 1.5 * containerBlockWidth,
         overflowY: 'auto'
     },
 

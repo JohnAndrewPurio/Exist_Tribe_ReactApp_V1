@@ -23,7 +23,7 @@ export default function Bedtime() {
     useEffect(() => {
         return () => {
             console.log('bedtime unmounted')
-            dispatch( resetBedtimeState() )
+            dispatch(resetBedtimeState())
         }
         // eslint-disable-next-line
     }, [])
@@ -48,10 +48,11 @@ export default function Bedtime() {
                 <Grid item xs={12}>
                     <Grid container alignItems="center" direction="column" >
                         <IconButton
-                            className={classes.swipeUp}
                             onClick={() => bedtimeDrawerHandler(true)}
                         >
-                            <KeyboardArrowUp />
+                            <KeyboardArrowUp
+                                className={classes.swipeUp}
+                            />
                         </IconButton>
                     </Grid>
                 </Grid>

@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+// import { useEffect } from 'react'
+// import { useDispatch, useSelector } from 'react-redux'
 
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
@@ -23,8 +23,8 @@ import { theme } from './styles'
 // import { INIT_REST_NODE_CLIENT, START_BEDTIME } from './scenes/nodeRedTopics'
 
 export default function App() {
-  const dispatch = useDispatch()
-  const startBedtime = useSelector(state => state.bedtime.bedtimeStart)
+  // const dispatch = useDispatch()
+  // const startBedtime = useSelector(state => state.bedtime.bedtimeStart)
 
   // uibuilder event listeners callbacks
   // const onMessage = (payload) => {

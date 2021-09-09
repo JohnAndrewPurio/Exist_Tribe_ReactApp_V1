@@ -2,6 +2,7 @@
 	
 The app is currently being served by an NR server with the help of the uibuilder package for controlling the different interactions happening from the UI to the server and vice versa.
 
+## 09/09/21
 ## Recent changes added:
 - Added a Material UI time picker for selecting the wake time and sleep time
 - Added different volume and brightness levels adjustments on click of a button or on adjust of the slider

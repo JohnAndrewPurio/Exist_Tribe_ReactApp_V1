@@ -20,7 +20,8 @@ import { handleAccordionExpanded, toggleBedtimeDrawer } from '../../redux/action
 import { 
     nightLightBrightnessAction, nightLightBrightnessLevelAction, 
     nightTimeSoundVolumeAction, nightTimeSoundVolumeLevelAction,
-    wakeLightBrightnessAction, wakeLightBrightnessLevelAction, wakeTimeSoundVolumeAction 
+    wakeLightBrightnessAction, wakeLightBrightnessLevelAction, 
+    wakeTimeSoundVolumeAction, wakeTimeSoundVolumeLevelAction 
 } from '../../redux/actions/sleepConfiguration'
 
 export default function BedtimeSettingsDrawer() {
@@ -238,7 +239,7 @@ function SoundAdjustments({ settingName, iconState }) {
 
         // Replace tomorrow
         if(settingName === 'wakeTimeSound') 
-            dispatch( wakeLightBrightnessLevelAction( levelValue ) )
+            dispatch( wakeTimeSoundVolumeLevelAction( levelValue ) )
     }
 
     return (

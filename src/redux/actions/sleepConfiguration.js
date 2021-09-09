@@ -1,7 +1,8 @@
 import { 
     NIGHT_LIGHT_BRIGHTNESS, NIGHT_LIGHT_BRIGHTNESS_LEVEL, 
     NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
-    WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, WAKE_TIME_SOUND_VOLUME 
+    WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
+    WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
 } from '../action_types/sleepConfiguration'
 
 export const nightLightBrightnessAction = (payload) => ({
@@ -36,5 +37,10 @@ export const wakeLightBrightnessLevelAction = (payload) => ({
 
 export const wakeTimeSoundVolumeAction = (payload) => ({
     type: WAKE_TIME_SOUND_VOLUME,
+    payload
+})
+
+export const wakeTimeSoundVolumeLevelAction = (payload) => ({
+    type: WAKE_TIME_SOUND_VOLUME_LEVEL,
     payload
 })

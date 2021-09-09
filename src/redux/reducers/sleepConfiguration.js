@@ -1,7 +1,8 @@
 import { 
     NIGHT_LIGHT_BRIGHTNESS, NIGHT_LIGHT_BRIGHTNESS_LEVEL, 
     NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
-    WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, WAKE_TIME_SOUND_VOLUME 
+    WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
+    WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
 } from '../action_types/sleepConfiguration'
 
 const levels = ['low', 'medium', 'high']
@@ -35,6 +36,7 @@ export default function reducer(state = initState, action) {
     selector[NIGHT_TIME_SOUND_VOLUME] = nightTimeSoundVolume
     selector[NIGHT_TIME_SOUND_VOLUME_LEVEL] = nightTimeSoundVolumeLevel
     selector[WAKE_TIME_SOUND_VOLUME] = wakeTimeSoundVolume
+    selector[WAKE_TIME_SOUND_VOLUME_LEVEL] = wakeTimeSoundVolumeLevel
     selector[WAKE_LIGHT_BRIGHTNESS] = wakeLightBrightness
     selector[WAKE_LIGHT_BRIGHTNESS_LEVEL] = wakeLightBrightnessLevel
 
@@ -116,4 +118,10 @@ function wakeTimeSoundVolume(state, payload) {
     currentLevel = levels[count]
 
     return {...state, wakeTimeSoundVolume: payload, wakeTimeSoundVolumeLevel: currentLevel}
+}
+
+function wakeTimeSoundVolumeLevel(state, payload) {
+    const currentLevel = levels[payload]
+
+    return {...state, wakeTimeSoundVolumeLevel: currentLevel, wakeTimeSoundVolume: sliderStops[currentLevel] }
 }

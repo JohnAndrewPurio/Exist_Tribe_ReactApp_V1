@@ -1,6 +1,11 @@
 import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme) => ({
+    badgeIcon: {
+        transform: 'scale(0.6)',
+        color: theme.palette.primary.contrastText
+    },
+
     root: {
         padding: theme.spacing(3),
         overflow: 'hidden',
@@ -9,6 +14,10 @@ export const useStyles = makeStyles((theme) => ({
         '& > *': {
             margin: theme.spacing(2)
         }
+    },
+
+    shortcutControls: {
+        color: theme.palette.primary.contrastText
     },
 
     swipeUp: {

@@ -1,46 +1,49 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { 
-    Brightness1Outlined, Brightness2Outlined, Brightness3Outlined, 
-    Brightness4Outlined, Brightness5Outlined, Brightness6Outlined, 
-    MusicNoteOutlined 
-} from '@material-ui/icons'
 import { ButtonGroup, IconButton, Grid, Paper, Typography } from '@material-ui/core'
 import { useStyles } from './styles'
 
-import { levels } from '../../constants'
-import { nightLightBrightnessLevelAction, wakeLightBrightnessLevelAction } from '../../redux/actions/sleepConfiguration'
+import { levels, bedtimeSoundModes } from '../../constants'
+import { bedtimeSoundAction, nightLightBrightnessLevelAction, nightLightStatusAction, wakeLightBrightnessLevelAction, wakeLightStatusAction } from '../../redux/actions/sleepConfiguration'
 
-export default function MainClock() {
+export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
     const classes = useStyles()
     const dispatch = useDispatch()
+
     const nightLightBrightnessLevel = useSelector(state => state.sleepConfiguration.nightLightBrightnessLevel)
     const wakeLightBrightnessLevel = useSelector(state => state.sleepConfiguration.wakeLightBrightnessLevel)
+    const bedtimeSoundMode = useSelector(state => state.sleepConfiguration.bedtimeSoundMode)
+    const nightLightOn = useSelector(state => state.sleepConfiguration.nightLightOn)
+    const wakeLightOn = useSelector(state => state.sleepConfiguration.wakeLightOn)
 
-    const nightLightIcons = {
-        low: <Brightness3Outlined className={classes.shortcutControls} />,
-        medium: <Brightness2Outlined className={classes.shortcutControls} />,
-        high: <Brightness1Outlined className={classes.shortcutControls} />,
+    const brightnessAdjust = (light, state) => {
+        const nextLevel = levels.indexOf(light === 'nightLight' ? nightLightBrightnessLevel : wakeLightBrightnessLevel) + 1
+        const levelValue = nextLevel === levels.length ? 0 : nextLevel
+
+        if (light === 'nightLight') {
+            if(!state)
+                dispatch( nightLightStatusAction(true) )
+
+            dispatch(nightLightBrightnessLevelAction(levelValue))
+        }
+        
+        if (light === 'wakeLight') {
+            if(!state)
+                dispatch( wakeLightStatusAction(true) )
+
+            dispatch(wakeLightBrightnessLevelAction(levelValue))
+        }
     }
 
-    const wakeLightIcons = {
-        low: <Brightness4Outlined className={classes.shortcutControls} />,
-        medium: <Brightness6Outlined className={classes.shortcutControls} />,
-        high: <Brightness5Outlined className={classes.shortcutControls} />,
+    const toggleBackgroundSound = () => {
+        let bedtimeSoundIndex = bedtimeSoundModes.indexOf(bedtimeSoundMode) + 1
+
+        if (bedtimeSoundIndex === bedtimeSoundModes.length)
+            bedtimeSoundIndex = 0
+
+        dispatch(bedtimeSoundAction(bedtimeSoundModes[bedtimeSoundIndex]))
     }
-
-    const brightnessAdjust = (light) => {
-        const nextLevel = levels.indexOf(light === 'nightLight' ? nightLightBrightnessLevel: wakeLightBrightnessLevel) + 1
-        const levelValue = nextLevel === levels.length ? 0: nextLevel 
-
-        if(light === 'nightLight') 
-            dispatch( nightLightBrightnessLevelAction( levelValue ) )
-
-        if(light === 'wakeLight') 
-            dispatch( wakeLightBrightnessLevelAction( levelValue ) )
-    }
-
 
     return (
         <Paper elevation={3} className={classes.paper} >
@@ -57,14 +60,18 @@ export default function MainClock() {
                 <Grid item xs={12}>
                     <Grid container justifyContent="center">
                         <ButtonGroup variant="contained" className={classes.shortcutControlsGroup} >
-                            <IconButton onClick={ () => brightnessAdjust('nightLight') }>
-                                { nightLightIcons[nightLightBrightnessLevel] }
+                            <IconButton onClick={() => brightnessAdjust('nightLight', nightLightOn)}>
+                                {nightLightIcons[nightLightBrightnessLevel]}
                             </IconButton>
-                            <IconButton onClick={ () => brightnessAdjust('wakeLight') } >
-                                { wakeLightIcons[wakeLightBrightnessLevel] } 
+                            <IconButton onClick={() => brightnessAdjust('wakeLight', wakeLightOn)} >
+                                {wakeLightIcons[wakeLightBrightnessLevel]}
                             </IconButton>
-                            <IconButton>
-                                <MusicNoteOutlined className={classes.shortcutControls} />
+                            <IconButton
+                                onClick={toggleBackgroundSound}
+                            >
+                                {
+                                    bedtimeSoundModesIcons[bedtimeSoundMode]
+                                }
                             </IconButton>
                         </ButtonGroup>
                     </Grid>
@@ -119,7 +126,7 @@ function TimeOfDay() {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            const currentHours = new Date( Date.now() ).getHours()
+            const currentHours = new Date(Date.now()).getHours()
             setTimeOfDay(currentHours < 12 ? 'AM' : 'PM')
         }, 1000)
 

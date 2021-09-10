@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import ToolTip from '../ToolTip'
+
 import { ButtonGroup, IconButton, Grid, Paper, Typography } from '@material-ui/core'
 import { useStyles } from './styles'
 
-import { levels, bedtimeSoundModes } from '../../constants'
+import { levels, bedtimeSoundModes, NIGHT_LIGHT_TEXT, WAKE_LIGHT_TEXT, SOUND_TEXT } from '../../constants'
 import { bedtimeSoundAction, nightLightBrightnessLevelAction, nightLightStatusAction, wakeLightBrightnessLevelAction, wakeLightStatusAction } from '../../redux/actions/sleepConfiguration'
 
 export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
@@ -22,15 +24,15 @@ export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wak
         const levelValue = nextLevel === levels.length ? 0 : nextLevel
 
         if (light === 'nightLight') {
-            if(!state)
-                dispatch( nightLightStatusAction(true) )
+            if (!state)
+                dispatch(nightLightStatusAction(true))
 
             dispatch(nightLightBrightnessLevelAction(levelValue))
         }
-        
+
         if (light === 'wakeLight') {
-            if(!state)
-                dispatch( wakeLightStatusAction(true) )
+            if (!state)
+                dispatch(wakeLightStatusAction(true))
 
             dispatch(wakeLightBrightnessLevelAction(levelValue))
         }
@@ -60,24 +62,30 @@ export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wak
                 <Grid item xs={12}>
                     <Grid container justifyContent="center">
                         <ButtonGroup variant="contained" className={classes.shortcutControlsGroup} >
-                            <IconButton onClick={() => brightnessAdjust('nightLight', nightLightOn)}>
-                                {nightLightIcons[nightLightBrightnessLevel]}
-                            </IconButton>
-                            <IconButton onClick={() => brightnessAdjust('wakeLight', wakeLightOn)} >
-                                {wakeLightIcons[wakeLightBrightnessLevel]}
-                            </IconButton>
-                            <IconButton
-                                onClick={toggleBackgroundSound}
-                            >
-                                {
-                                    bedtimeSoundModesIcons[bedtimeSoundMode]
-                                }
-                            </IconButton>
+                            <ToolTip title={NIGHT_LIGHT_TEXT} >
+                                <IconButton onClick={() => brightnessAdjust('nightLight', nightLightOn)}>
+                                    {nightLightIcons[nightLightBrightnessLevel]}
+                                </IconButton>
+                            </ToolTip>
+                            <ToolTip title={WAKE_LIGHT_TEXT} >
+                                <IconButton onClick={() => brightnessAdjust('wakeLight', wakeLightOn)} >
+                                    {wakeLightIcons[wakeLightBrightnessLevel]}
+                                </IconButton>
+                            </ToolTip>
+                            <ToolTip title={SOUND_TEXT} >
+                                <IconButton
+                                    onClick={toggleBackgroundSound}
+                                >
+                                    {
+                                        bedtimeSoundModesIcons[bedtimeSoundMode]
+                                    }
+                                </IconButton>
+                            </ToolTip>
                         </ButtonGroup>
                     </Grid>
                 </Grid>
             </Grid>
-        </Paper>
+        </Paper >
     )
 }
 

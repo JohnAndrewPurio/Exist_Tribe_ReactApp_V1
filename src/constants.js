@@ -17,4 +17,8 @@ export const NIGHT_TIME_SOUND = 'nightTimeSound'
 export const WAKE_LIGHT = 'wakeLight'
 export const WAKE_TIME_SOUND = 'wakeTimeSound'
 
+export const NIGHT_LIGHT_TEXT = 'Night Light'
+export const WAKE_LIGHT_TEXT = 'Wake Light'
+export const SOUND_TEXT = 'Background Sound'
+
 // "node-red-contrib-uibuilder": "file:../../node_modules/node-red-contrib-uibuilder",

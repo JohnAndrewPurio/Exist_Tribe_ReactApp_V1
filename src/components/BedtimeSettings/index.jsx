@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import ToolTip from '../ToolTip'
+import camelCaseToUpperCase from '../../utils/camelCaseToUpperCase'
+
 import {
-    Accordion, AccordionDetails, AccordionSummary, Divider, IconButton, Grid, Paper, Slider, Typography
+    Accordion, AccordionDetails, AccordionSummary, Chip, Divider, IconButton, Grid, Paper, Slider, Typography
 } from '@material-ui/core'
 import {
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
@@ -102,7 +105,7 @@ export default function BedtimeSettings({ defaultSetting }) {
                 <Grid container justifyContent="center">
                     <Paper className={classes.soundSettings} elevation={2}>
                         {
-                            defaultSetting ? <Typography variant="h6" className={classes.contrastText} >Default Configurations</Typography> 
+                            defaultSetting ? <Typography variant="h6" className={classes.contrastText} >Default Configurations</Typography>
                                 : <></>
                         }
                         {
@@ -186,8 +189,6 @@ function AccordionMenu({ config, expanded, lightOn }) {
     const { name, summary, content, icon } = config
 
     const accordionHandler = (targetAccordion) => {
-        console.log('--Notice--')
-        console.log(lightOn, targetAccordion, name)
         if (lightOn !== undefined && name === WAKE_LIGHT) {
             dispatch(wakeLightStatusAction(!lightOn))
             targetAccordion = null
@@ -251,13 +252,17 @@ function SoundAdjustments({ settingName, iconState }) {
                 <Grid container justifyContent="center">
                     <Paper className={classes.containerBlock} >
                         <Grid item>
-                            <IconButton onClick={volumeAdjust}>
-                                {volumeIcons[iconState]}
-                            </IconButton>
+                            <ToolTip title={camelCaseToUpperCase(settingName)}>
+                                <IconButton onClick={volumeAdjust}>
+                                    {volumeIcons[iconState]}
+                                </IconButton>
+                            </ToolTip>
                         </Grid>
                         <Grid item xs>
                             <VolumeSlider settingName={settingName} />
                         </Grid>
+
+                        <Chip className={classes.chip} size="small" label={iconState.toUpperCase()} color="primary" />
                     </Paper>
                 </Grid>
             </Grid>
@@ -346,13 +351,17 @@ function LightAdjustments({ settingName, iconState }) {
     return (
         <Paper className={classes.containerBlock} >
             <Grid item>
-                <IconButton onClick={brightnessAdjust} >
-                    {icons[iconState]}
-                </IconButton>
+                <ToolTip title={camelCaseToUpperCase(settingName)}>
+                    <IconButton onClick={brightnessAdjust} >
+                        {icons[iconState]}
+                    </IconButton>
+                </ToolTip>
             </Grid>
             <Grid item xs>
                 <VolumeSlider settingName={settingName} />
             </Grid>
+
+            <Chip className={classes.chip} size="small" label={iconState.toUpperCase()} color="primary" />
         </Paper>
     )
 }

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
+import AudioSelectDialog from '../AudioSelectDialog'
 import BedtimeSettingsDrawer from '../BedtimeSettingsDrawer'
 import MainClock from '../MainClock'
 import SleepBar from '../SleepBar'
@@ -19,6 +20,7 @@ import { resetBedtimeState, toggleBedtimeDrawer } from '../../redux/actions/bedt
 export default function Bedtime() {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
 
     const bedtimeDrawerHandler = (open) => {
         dispatch(toggleBedtimeDrawer(open))
@@ -98,6 +100,7 @@ export default function Bedtime() {
             </Grid>
 
             <BedtimeSettingsDrawer />
+            <AudioSelectDialog settingName={accordionExpanded} />
         </>
     )
 }

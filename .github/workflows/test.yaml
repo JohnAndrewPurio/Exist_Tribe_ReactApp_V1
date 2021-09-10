@@ -21,5 +21,6 @@ jobs:
         port: ${{ secrets.PORT }}
     - run: cd ~/.node-red/uibuilder
     - run: ls
+    - run: whoami
     # - run: # git pull. app should be managed with pm2 to watch for changes and restart.
     # - run: npm run build

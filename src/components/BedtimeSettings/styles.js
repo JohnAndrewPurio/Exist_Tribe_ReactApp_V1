@@ -9,6 +9,12 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2)
     },
 
+    chip: {
+        position: 'absolute',
+        bottom: theme.spacing(3),
+        right: theme.spacing(3)
+    },
+
     divider: {
         backgroundColor: theme.palette.primary.contrastText
     },

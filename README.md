@@ -2,8 +2,37 @@
 	
 The app is currently being served by an NR server with the help of the uibuilder package for controlling the different interactions happening from the UI to the server and vice versa.
 
+
+## 09/09/21 
+### Changes:
+- Added the default configurations in the Home Page of the REST Node (The user can toggle and configure the settings here that in which the settings values will persist until updated here)
+- Added the toggle shortcut for the background sound/music state where the user can click up to four(4) times up until it cycles again. The order of the state are as follows: **mute**, **both**, **nightTimeSound**, **wakeTimeSound**
+- Changed the volume/brightness stops from (34, 67, 100), to (0, 50, 100) which is corresponding to levels low, medium, and high respectively
+- Added the statuses in the status card in which each statuses show to the user the summary of the current setting or sleep configurations he/she has applied
+
+### Screenshots of the Changes
+
+### Default Configurations
+![Default Configurations](./screenshots/09-10-21/DefaultConfigurations.png)
+<br />
+
+### Background Music Toggle Shortcut
+![Music Toggle Shortcut](./screenshots/09-10-21/MusicToggleShortcut.png)
+<br />
+
+### Volume/Brightness Stops Changed
+![Volume Stops](./screenshots/09-10-21/VolumeStops.png)
+<br />
+
+### Statuses
+![Empty Status](./screenshots/09-10-21/EmptyStatus.png)
+<br />
+
+![Available Status](./screenshots/09-10-21/AvailableStatus.png)
+<br />
+
 ## 09/09/21
-## Recent changes added:
+### Changes:
 - Added a Material UI time picker for selecting the wake time and sleep time
 - Added different volume and brightness levels adjustments on click of a button or on adjust of the slider
 - Added functionality to interact with the volume and brightness levels to the shortcut buttons found in the Main Digital Clock, for easier accessibility

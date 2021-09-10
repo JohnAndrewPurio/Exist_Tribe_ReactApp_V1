@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+// import AudioSelectDialog from '../AudioSelectDialog'
 import ToolTip from '../ToolTip'
 import camelCaseToUpperCase from '../../utils/camelCaseToUpperCase'
 
 import {
-    Accordion, AccordionDetails, AccordionSummary, Chip, Divider, IconButton, Grid, Paper, Slider, Typography
+    Accordion, AccordionDetails, AccordionSummary, Button, Chip, Divider, 
+    // FormControl, 
+    Grid, IconButton, 
+    // InputLabel, NativeSelect, 
+    Paper, Slider, Typography
 } from '@material-ui/core'
 import {
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
@@ -16,13 +21,17 @@ import {
 } from '@material-ui/icons'
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { useStyles } from './styles'
+import { 
+    // BootstrapInput, 
+    useStyles 
+} from './styles'
 
 import { levels, WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../../constants'
 import { handleAccordionExpanded } from '../../redux/actions/bedtime'
 import {
     nightLightBrightnessAction, nightLightBrightnessLevelAction, nightLightStatusAction,
     nightTimeSoundVolumeAction, nightTimeSoundVolumeLevelAction,
+    toggleWakeTimeSelectorAction,
     wakeLightBrightnessAction, wakeLightBrightnessLevelAction, wakeLightStatusAction,
     wakeTimeSoundVolumeAction, wakeTimeSoundVolumeLevelAction
 } from '../../redux/actions/sleepConfiguration'
@@ -229,6 +238,8 @@ function AccordionMenu({ config, expanded, lightOn }) {
 function SoundAdjustments({ settingName, iconState }) {
     const classes = useStyles()
     const dispatch = useDispatch()
+    // const soundSelector = useSelector(state => state.sleepConfiguration[`${settingName}Selector`])
+
     const volumeIcons = {
         low: <VolumeMute className={classes.icon} />,
         medium: <VolumeDown className={classes.icon} />,
@@ -246,22 +257,39 @@ function SoundAdjustments({ settingName, iconState }) {
             dispatch(wakeTimeSoundVolumeLevelAction(levelValue))
     }
 
+    const toggleSoundSelector = () => {
+        if (settingName === NIGHT_TIME_SOUND)
+            dispatch(toggleWakeTimeSelectorAction(NIGHT_TIME_SOUND)) // Update to toggleNightTimeSoundSelectorAction later
+
+        if (settingName === WAKE_TIME_SOUND)
+            dispatch(toggleWakeTimeSelectorAction(WAKE_TIME_SOUND)) 
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
-                <Grid container justifyContent="center">
-                    <Paper className={classes.containerBlock} >
-                        <Grid item>
-                            <ToolTip title={camelCaseToUpperCase(settingName)}>
-                                <IconButton onClick={volumeAdjust}>
-                                    {volumeIcons[iconState]}
-                                </IconButton>
-                            </ToolTip>
-                        </Grid>
-                        <Grid item xs>
-                            <VolumeSlider settingName={settingName} />
+                <Grid container justifyContent="center" >
+                    <Paper elevation={2} className={classes.containerBlock}>
+                        <Grid container justtifyContent="center" alignItems="center">
+                            <Grid item xs={3}>
+                                <ToolTip title={camelCaseToUpperCase(settingName)}>
+                                    <IconButton onClick={volumeAdjust}>
+                                        {volumeIcons[iconState]}
+                                    </IconButton>
+                                </ToolTip>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <VolumeSlider settingName={settingName} />
+                            </Grid>
                         </Grid>
 
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={toggleSoundSelector}
+                        >
+                            Select Sound
+                        </Button>
                         <Chip className={classes.chip} size="small" label={iconState.toUpperCase()} color="primary" />
                     </Paper>
                 </Grid>
@@ -350,15 +378,17 @@ function LightAdjustments({ settingName, iconState }) {
 
     return (
         <Paper className={classes.containerBlock} >
-            <Grid item>
-                <ToolTip title={camelCaseToUpperCase(settingName)}>
-                    <IconButton onClick={brightnessAdjust} >
-                        {icons[iconState]}
-                    </IconButton>
-                </ToolTip>
-            </Grid>
-            <Grid item xs>
-                <VolumeSlider settingName={settingName} />
+            <Grid container justtifyContent="center" alignItems="center">
+                <Grid item xs={3}>
+                    <ToolTip title={camelCaseToUpperCase(settingName)}>
+                        <IconButton onClick={brightnessAdjust} >
+                            {icons[iconState]}
+                        </IconButton>
+                    </ToolTip>
+                </Grid>
+                <Grid item xs={9}>
+                    <VolumeSlider settingName={settingName} />
+                </Grid>
             </Grid>
 
             <Chip className={classes.chip} size="small" label={iconState.toUpperCase()} color="primary" />

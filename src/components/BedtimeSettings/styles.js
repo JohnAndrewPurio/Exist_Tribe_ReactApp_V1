@@ -1,5 +1,28 @@
-import { makeStyles } from '@material-ui/core'
+import { InputBase, makeStyles, withStyles } from '@material-ui/core'
 import { containerBlockWidth } from '../../constants'
+
+export const BootstrapInput = withStyles((theme) => ({
+    root: {
+        'label + &': {
+            marginTop: theme.spacing(3),
+        },
+    },
+    input: {
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
+    },
+}))(InputBase);
 
 export const useStyles = makeStyles((theme) => ({
     accordionMenu: {
@@ -11,8 +34,8 @@ export const useStyles = makeStyles((theme) => ({
 
     chip: {
         position: 'absolute',
-        bottom: theme.spacing(3),
-        right: theme.spacing(3)
+        top: theme.spacing(3),
+        right: theme.spacing(6)
     },
 
     divider: {
@@ -42,10 +65,11 @@ export const useStyles = makeStyles((theme) => ({
     containerBlock: {
         width: containerBlockWidth,
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'space-around',
         padding: theme.spacing(3),
         backgroundColor: theme.palette.primary.dark,
-        alignItems: 'center'
+        // alignItems: 'center'
     },
 
     drawer: {

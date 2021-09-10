@@ -3,7 +3,7 @@
 The app is currently being served by an NR server with the help of the uibuilder package for controlling the different interactions happening from the UI to the server and vice versa.
 
 
-## 09/09/21 
+## 09/10/21 
 ### Changes:
 - Added the default configurations in the Home Page of the REST Node (The user can toggle and configure the settings here that in which the settings values will persist until updated here)
 - Added the toggle shortcut for the background sound/music state where the user can click up to four(4) times up until it cycles again. The order of the state are as follows: **mute**, **both**, **nightTimeSound**, **wakeTimeSound**

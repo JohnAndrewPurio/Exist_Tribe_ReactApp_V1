@@ -51,7 +51,6 @@ export default function BedtimeSettings({ defaultSetting }) {
         {
             name: "wakeOrSleepTime",
             content: <WakeOrSleepTimeSelection />,
-            details: "Some settings",
             icon: <ExpandMore className={classes.icon} />,
             summary: "Wake Or Sleep Time"
         },
@@ -64,7 +63,6 @@ export default function BedtimeSettings({ defaultSetting }) {
         {
             name: NIGHT_TIME_SOUND,
             content: <SoundAdjustments settingName={NIGHT_TIME_SOUND} iconState={nightTimeSoundVolumeLevel} />,
-            details: "Some settings",
             icon: <ExpandMore className={classes.icon} />,
             summary: "Night Time Sound"
         },
@@ -72,7 +70,6 @@ export default function BedtimeSettings({ defaultSetting }) {
         {
             name: WAKE_TIME_SOUND,
             content: <SoundAdjustments settingName={WAKE_TIME_SOUND} iconState={wakeTimeSoundVolumeLevel} />,
-            details: "Some settings",
             icon: <ExpandMore className={classes.icon} />,
             summary: "Wake Time Sound"
         },
@@ -85,7 +82,6 @@ export default function BedtimeSettings({ defaultSetting }) {
         {
             name: NIGHT_LIGHT,
             content: <LightAdjustments settingName={NIGHT_LIGHT} iconState={nightLightBrightnessLevel} />,
-            details: "Some settings",
             icon: <Brightness2Outlined className={classes.icon} />,
             light: nightLightOn,
             summary: "Night Light"
@@ -94,7 +90,6 @@ export default function BedtimeSettings({ defaultSetting }) {
         {
             name: WAKE_LIGHT,
             content: <LightAdjustments settingName={WAKE_LIGHT} iconState={wakeLightBrightnessLevel} />,
-            details: "Some settings",
             icon: <WbSunnyOutlined className={classes.icon} />,
             light: wakeLightOn,
             summary: "Wake Light"
@@ -151,6 +146,7 @@ function SectionDivider({ sectionName }) {
 }
 
 function TimePicker({ label }) {
+    const classes = useStyles()
     const dispatch = useDispatch()
     const wakeTime = useSelector(state => state.sleepConfiguration.wakeTime)
 
@@ -159,43 +155,43 @@ function TimePicker({ label }) {
     }
 
     return (
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardTimePicker
-                color="secondary"
-                inputVariant="outlined"
-                margin="normal"
-                id={label}
-                label={label}
-                value={wakeTime}
-                onChange={handleDateChange}
-                KeyboardButtonProps={{
-                    'aria-label': 'change time',
-                }}
-            />
-        </MuiPickersUtilsProvider>
+        <Paper elevation={2} className={classes.timePickerPaper} >
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardTimePicker
+                    color="primary"
+                    inputVariant="outlined"
+                    margin="normal"
+                    id={label}
+                    label={label}
+                    value={wakeTime}
+                    onChange={handleDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change time',
+                    }}
+                />
+            </MuiPickersUtilsProvider>
+        </Paper>
     )
 }
 
-function SleepAmountSlider() {
+function SleepAmountSlider({ label, value, offset }) {
     const dispatch = useDispatch()
-    const wakeTime = useSelector(state => state.sleepConfiguration.wakeTime)
-    const futureDate = new Date(wakeTime).getTime()
-    const currentDate = Date.now()
-    const value = Math.round( 
-        ( futureDate - currentDate ) / ( 60 * 60 * 1000 )
-    )
 
-    const handleTimeChange = (event, newValue) => {
-            dispatch( wakeTimeAction(new Date( Date.now() + 60 * 60 * 1000 * newValue ) ) )
+    const handleTimeChange = (event, selectedTimeValue) => {
+        const wakeTime = new Date( Date.now() + offset * selectedTimeValue )
+
+        dispatch( wakeTimeAction( wakeTime ) )
     }
 
     return (
         <PrettoSlider
             onChangeCommitted={handleTimeChange}
             valueLabelDisplay="auto"
+            label={label}
             aria-label="sleep_amount"
             value={value}
-            defaultValue={8}
+            // min={ label === 'sleepHours' ? 4: 0 } // Facing some issue in the computation
+            // max={ label === 'sleepHours' ? 12: 59 }
             min={4}
             max={12}
         />
@@ -204,6 +200,13 @@ function SleepAmountSlider() {
 
 function WakeOrSleepTimeSelection() {
     const classes = useStyles()
+    const wakeTime = useSelector(state => state.sleepConfiguration.wakeTime)
+    const futureDate = new Date(wakeTime).getTime()
+    const currentDate = Date.now()
+    const offset = 60 * 60 * 1000
+    const value = Math.round(
+        (futureDate - currentDate) / offset
+    )
 
     return (
         <Grid container>
@@ -211,7 +214,18 @@ function WakeOrSleepTimeSelection() {
                 <Grid container justifyContent="center">
                     <Paper className={classes.containerBlock} >
                         <TimePicker label="Wake Time" />
-                        <SleepAmountSlider label="Sleep Time" />
+
+                        <SectionDivider sectionName="Sleep Time in Hours" />
+                        <SleepAmountSlider 
+                            label="sleepHours" 
+                            value={value}      
+                            offset={offset}                      
+                        />
+
+                        {/* Not working yet */}
+                        {/* <SectionDivider sectionName="Minutes" />
+                        <SleepAmountSlider label="sleepMinutes" /> */}
+                        <Chip className={classes.chip} size="small" label={`${value} hours`} color="primary" />
                     </Paper>
                 </Grid>
             </Grid>

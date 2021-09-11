@@ -28,7 +28,7 @@ const initState = {
     
     soundSelector: null,
 
-    wakeTime: new Date( Date.now() ),
+    wakeTime: new Date( Date.now() + 8 * 60 * 60 * 1000 ),
     wakeTimeAudio: null,
     wakeTimeSound: null,
     wakeTimeSoundVolume: 0,

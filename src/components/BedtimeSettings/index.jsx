@@ -1,18 +1,11 @@
-// Added a comment
-
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-// import AudioSelectDialog from '../AudioSelectDialog'
 import ToolTip from '../ToolTip'
 import camelCaseToUpperCase from '../../utils/camelCaseToUpperCase'
 
 import {
     Accordion, AccordionDetails, AccordionSummary, Button, Chip, Divider,
-    // FormControl, 
-    Grid, IconButton,
-    // InputLabel, NativeSelect, 
-    Paper, Slider, TextField, Typography
+    Grid, IconButton, Paper, Slider, Typography
 } from '@material-ui/core'
 import {
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
@@ -163,7 +156,6 @@ function TimePicker({ label }) {
 
     const handleDateChange = (date) => {
         dispatch(wakeTimeAction(date))
-        // setSelectedDate(date)
     }
 
     return (

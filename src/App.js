@@ -1,6 +1,10 @@
 // import { useEffect } from 'react'
-// import { useDispatch, useSelector } from 'react-redux'
+import { 
+  // useDispatch, 
+  useSelector 
+} from 'react-redux'
 
+import AudioSelectDialog from './components/AudioSelectDialog'
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
 
@@ -25,6 +29,7 @@ import { theme } from './styles'
 export default function App() {
   // const dispatch = useDispatch()
   // const startBedtime = useSelector(state => state.bedtime.bedtimeStart)
+  const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
 
   // // uibuilder event listeners callbacks
   // const onMessage = (payload) => {
@@ -110,6 +115,8 @@ export default function App() {
         <Route path="/startBedtime" component={Bedtime} />
         <Route path="/" component={Home} />
       </Switch>
+
+      <AudioSelectDialog settingName={accordionExpanded} />
     </ThemeProvider>
   )
 }

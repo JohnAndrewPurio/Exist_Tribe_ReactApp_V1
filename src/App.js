@@ -1,6 +1,8 @@
+
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AudioSelectDialog from './components/AudioSelectDialog'
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
 
@@ -23,6 +25,7 @@ import {
 import { INIT_REST_NODE_CLIENT, START_BEDTIME } from './scenes/nodeRedTopics'
 
 export default function App() {
+
   const dispatch = useDispatch()
   const startBedtime = useSelector(state => state.bedtime.bedtimeStart)
 
@@ -110,6 +113,8 @@ export default function App() {
         <Route path="/startBedtime" component={Bedtime} />
         <Route path="/" component={Home} />
       </Switch>
+
+      <AudioSelectDialog settingName={accordionExpanded} />
     </ThemeProvider>
   )
 }

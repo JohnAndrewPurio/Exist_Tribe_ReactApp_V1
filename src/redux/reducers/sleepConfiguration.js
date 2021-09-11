@@ -12,6 +12,7 @@ import { levels, stops, sliderStops } from '../../constants'
 const initState = {
     bedtimeSoundMode: 'mute',
 
+    nightLightFadeout: 30,
     nightLightBrightness: 0,
     nightLightBrightnessLevel: 'low',
     nightLightOn: false,
@@ -20,6 +21,7 @@ const initState = {
     nightTimeSoundVolume: 0,
     nightTimeSoundVolumeLevel: 'low',
 
+    wakeLightFadeout: 30,
     wakeLightBrightness: 0,
     wakeLightBrightnessLevel: 'low',
     wakeLightOn: false,

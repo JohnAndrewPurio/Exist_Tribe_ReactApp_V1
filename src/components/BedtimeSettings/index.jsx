@@ -8,11 +8,11 @@ import ToolTip from '../ToolTip'
 import camelCaseToUpperCase from '../../utils/camelCaseToUpperCase'
 
 import {
-    Accordion, AccordionDetails, AccordionSummary, Button, Chip, Divider, 
+    Accordion, AccordionDetails, AccordionSummary, Button, Chip, Divider,
     // FormControl, 
-    Grid, IconButton, 
+    Grid, IconButton,
     // InputLabel, NativeSelect, 
-    Paper, Slider, Typography
+    Paper, Slider, TextField, Typography
 } from '@material-ui/core'
 import {
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
@@ -23,18 +23,16 @@ import {
 } from '@material-ui/icons'
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { 
-    // BootstrapInput, 
-    useStyles 
-} from './styles'
+import { PrettoSlider, useStyles } from './styles'
 
 import { levels, WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../../constants'
 import { handleAccordionExpanded } from '../../redux/actions/bedtime'
 import {
     nightLightBrightnessAction, nightLightBrightnessLevelAction, nightLightStatusAction,
     nightTimeSoundVolumeAction, nightTimeSoundVolumeLevelAction,
-    toggleWakeTimeSelectorAction,
+    toggleSoundSelectorAction,
     wakeLightBrightnessAction, wakeLightBrightnessLevelAction, wakeLightStatusAction,
+    wakeTimeAction,
     wakeTimeSoundVolumeAction, wakeTimeSoundVolumeLevelAction
 } from '../../redux/actions/sleepConfiguration'
 
@@ -160,19 +158,23 @@ function SectionDivider({ sectionName }) {
 }
 
 function TimePicker({ label }) {
-    const [selectedDate, setSelectedDate] = useState(new Date(Date.now()));
+    const dispatch = useDispatch()
+    const wakeTime = useSelector(state => state.sleepConfiguration.wakeTime)
 
     const handleDateChange = (date) => {
-        setSelectedDate(date);
-    };
+        dispatch(wakeTimeAction(date))
+        // setSelectedDate(date)
+    }
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardTimePicker
+                color="secondary"
+                inputVariant="outlined"
                 margin="normal"
                 id={label}
                 label={label}
-                value={selectedDate}
+                value={wakeTime}
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
                     'aria-label': 'change time',
@@ -182,14 +184,46 @@ function TimePicker({ label }) {
     )
 }
 
-function WakeOrSleepTimeSelection() {
+function SleepAmountSlider() {
+    const dispatch = useDispatch()
+    const wakeTime = useSelector(state => state.sleepConfiguration.wakeTime)
+    const futureDate = new Date(wakeTime).getTime()
+    const currentDate = Date.now()
+    const value = Math.round( 
+        ( futureDate - currentDate ) / ( 60 * 60 * 1000 )
+    )
+
+    const handleTimeChange = (event, newValue) => {
+            dispatch( wakeTimeAction(new Date( Date.now() + 60 * 60 * 1000 * newValue ) ) )
+    }
+
     return (
-        <Paper>
-            <Grid container justifyContent="center" >
-                <TimePicker label="Wake Time" />
-                <TimePicker label="Sleep Time" />
+        <PrettoSlider
+            onChangeCommitted={handleTimeChange}
+            valueLabelDisplay="auto"
+            aria-label="sleep_amount"
+            value={value}
+            defaultValue={8}
+            min={4}
+            max={12}
+        />
+    )
+}
+
+function WakeOrSleepTimeSelection() {
+    const classes = useStyles()
+
+    return (
+        <Grid container>
+            <Grid item xs={12} >
+                <Grid container justifyContent="center">
+                    <Paper className={classes.containerBlock} >
+                        <TimePicker label="Wake Time" />
+                        <SleepAmountSlider label="Sleep Time" />
+                    </Paper>
+                </Grid>
             </Grid>
-        </Paper>
+        </Grid>
     )
 }
 
@@ -261,10 +295,10 @@ function SoundAdjustments({ settingName, iconState }) {
 
     const toggleSoundSelector = () => {
         if (settingName === NIGHT_TIME_SOUND)
-            dispatch(toggleWakeTimeSelectorAction(NIGHT_TIME_SOUND)) // Update to toggleNightTimeSoundSelectorAction later
+            dispatch(toggleSoundSelectorAction(NIGHT_TIME_SOUND)) // Update to toggleNightTimeSoundSelectorAction later
 
         if (settingName === WAKE_TIME_SOUND)
-            dispatch(toggleWakeTimeSelectorAction(WAKE_TIME_SOUND)) 
+            dispatch(toggleSoundSelectorAction(WAKE_TIME_SOUND))
     }
 
     return (
@@ -272,7 +306,7 @@ function SoundAdjustments({ settingName, iconState }) {
             <Grid item xs={12}>
                 <Grid container justifyContent="center" >
                     <Paper elevation={2} className={classes.containerBlock}>
-                        <Grid container justtifyContent="center" alignItems="center">
+                        <Grid container justifyContent="center" alignItems="center">
                             <Grid item xs={3}>
                                 <ToolTip title={camelCaseToUpperCase(settingName)}>
                                     <IconButton onClick={volumeAdjust}>

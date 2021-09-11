@@ -2,9 +2,9 @@ import {
     BEDTIME_SOUND, NIGHT_LIGHT_STATUS, WAKE_LIGHT_STATUS,
     NIGHT_LIGHT_BRIGHTNESS, NIGHT_LIGHT_BRIGHTNESS_LEVEL, 
     NIGHT_TIME_AUDIO, NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
-    SELECT_WAKE_TIME_SOUND, TOGGLE_SOUND_SELECTOR,
+    SELECT_WAKE_TIME_SOUND, TOGGLE_WAKE_TIME_SOUND_SELECTOR,
     WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
-    WAKE_TIME, WAKE_TIME_AUDIO, WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
+    WAKE_TIME_AUDIO, WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
 } from '../action_types/sleepConfiguration'
 
 import { levels, stops, sliderStops } from '../../constants'
@@ -26,7 +26,6 @@ const initState = {
     
     soundSelector: null,
 
-    wakeTime: new Date( Date.now() ),
     wakeTimeAudio: null,
     wakeTimeSound: null,
     wakeTimeSoundVolume: 0,
@@ -47,9 +46,8 @@ export default function reducer(state = initState, action) {
     selector[NIGHT_TIME_SOUND_VOLUME_LEVEL] = nightTimeSoundVolumeLevel
 
     selector[SELECT_WAKE_TIME_SOUND] = selectWakeTimeSound
-    selector[TOGGLE_SOUND_SELECTOR] = toggleSoundSelector
+    selector[TOGGLE_WAKE_TIME_SOUND_SELECTOR] = toggleWakeTimeSoundSelector
 
-    selector[WAKE_TIME] = wakeTime
     selector[WAKE_TIME_AUDIO] = wakeTimeAudio
     selector[WAKE_LIGHT_BRIGHTNESS] = wakeLightBrightness
     selector[WAKE_LIGHT_BRIGHTNESS_LEVEL] = wakeLightBrightnessLevel
@@ -119,12 +117,8 @@ function selectWakeTimeSound(state, payload) {
     return {...state, wakeTimeSound: payload}
 }
 
-function toggleSoundSelector(state, payload) {
+function toggleWakeTimeSoundSelector(state, payload) {
     return {...state, soundSelector: payload}
-}
-
-function wakeTime(state, payload) {
-    return {...state, wakeTime: payload}
 }
 
 function wakeLightBrightness(state, payload) {

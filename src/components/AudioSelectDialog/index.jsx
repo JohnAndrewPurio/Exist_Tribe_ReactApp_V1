@@ -9,7 +9,7 @@ import {
 import { PlayArrow } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-import { nightTimeAudioAction, toggleSoundSelectorAction, wakeTimeAudioAction } from '../../redux/actions/sleepConfiguration'
+import { nightTimeAudioAction, toggleWakeTimeSelectorAction, wakeTimeAudioAction } from '../../redux/actions/sleepConfiguration'
 
 import { audioFileNames, NIGHT_TIME_SOUND } from '../../constants'
 import DeepMeditation from '../../audio/DeepMeditation.mp3'
@@ -30,7 +30,7 @@ export default function AudioSelectDialog({ settingName }) {
     const [currentAudio, setCurrentAudio] = useState(null)
 
     const handleClose = () => {
-        dispatch(toggleSoundSelectorAction(null))
+        dispatch(toggleWakeTimeSelectorAction(null))
     }
 
     const handleCurrentAudio = (targetAudio) => {
@@ -71,9 +71,10 @@ function ItemsList({ fileNames, handleCurrentAudio, currentAudio, settingName })
     const handleListItemClick = (event, index) => {
         const audioAction = settingName === NIGHT_TIME_SOUND ? nightTimeAudioAction : wakeTimeAudioAction
 
+        console.log(settingName)
+
         setSelectedIndex(index)
         dispatch( audioAction(fileNames[index]) )
-        dispatch( toggleSoundSelectorAction(null) )
     }
 
     return (

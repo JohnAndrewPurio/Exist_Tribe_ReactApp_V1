@@ -1,10 +1,10 @@
 import { 
     BEDTIME_SOUND, NIGHT_LIGHT_STATUS, WAKE_LIGHT_STATUS,
     NIGHT_LIGHT_BRIGHTNESS, NIGHT_LIGHT_BRIGHTNESS_LEVEL, 
-    NIGHT_TIME_AUDIO, NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
-    SELECT_WAKE_TIME_SOUND, TOGGLE_SOUND_SELECTOR, 
+    NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
+    SELECT_WAKE_TIME_SOUND, TOGGLE_WAKE_TIME_SOUND_SELECTOR,
     WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
-    WAKE_TIME, WAKE_TIME_AUDIO, WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
+    WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
 } from '../action_types/sleepConfiguration'
 
 export const bedtimeSoundAction = (payload) => ({
@@ -19,11 +19,6 @@ export const nightLightBrightnessAction = (payload) => ({
 
 export const nightLightBrightnessLevelAction = (payload) => ({
     type: NIGHT_LIGHT_BRIGHTNESS_LEVEL,
-    payload
-})
-
-export const nightTimeAudioAction = (payload) => ({
-    type: NIGHT_TIME_AUDIO,
     payload
 })
 
@@ -47,8 +42,8 @@ export const selectWakeTimeSoundAction = (payload) => ({
     payload
 })
 
-export const toggleSoundSelectorAction = (payload) => ({
-    type: TOGGLE_SOUND_SELECTOR,
+export const toggleWakeTimeSelectorAction = (payload) => ({
+    type: TOGGLE_WAKE_TIME_SOUND_SELECTOR,
     payload
 })
 
@@ -64,16 +59,6 @@ export const wakeLightBrightnessLevelAction = (payload) => ({
 
 export const wakeLightStatusAction = (payload) => ({
     type: WAKE_LIGHT_STATUS,
-    payload
-})
-
-export const wakeTimeAction = (payload) => ({
-    type: WAKE_TIME,
-    payload
-})
-
-export const wakeTimeAudioAction = (payload) => ({
-    type: WAKE_TIME_AUDIO,
     payload
 })
 

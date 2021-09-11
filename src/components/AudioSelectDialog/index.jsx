@@ -1,3 +1,5 @@
+// Will fix the test audio pause and play
+
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -7,13 +9,15 @@ import {
 import { PlayArrow } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-import { toggleWakeTimeSelectorAction } from '../../redux/actions/sleepConfiguration'
+import { nightTimeAudioAction, toggleWakeTimeSelectorAction, wakeTimeAudioAction } from '../../redux/actions/sleepConfiguration'
 
-import { audioFileNames } from '../../constants'
+import { audioFileNames, NIGHT_TIME_SOUND } from '../../constants'
 import DeepMeditation from '../../audio/DeepMeditation.mp3'
 import QuietMorning from '../../audio/QuietMorning.mp3'
 import QuietTime from '../../audio/QuietTime.mp3'
 import Tranquility from '../../audio/Tranquility.mp3'
+
+import camelCaseToUpperCase from '../../utils/camelCaseToUpperCase'
 
 const audioFiles = [
     DeepMeditation, QuietMorning, QuietTime, Tranquility
@@ -30,7 +34,7 @@ export default function AudioSelectDialog({ settingName }) {
     }
 
     const handleCurrentAudio = (targetAudio) => {
-        if(targetAudio)
+        if (targetAudio)
             targetAudio = new Audio(targetAudio)
 
         setCurrentAudio(targetAudio)
@@ -43,37 +47,48 @@ export default function AudioSelectDialog({ settingName }) {
         >
             <DialogTitle
                 className={classes.dialogTitle}
-                id="simple-dialog-title"
+                id="sound-title"
             >
-                Select Sound
+                Select {camelCaseToUpperCase(settingName || 'sound')}
             </DialogTitle>
             <Divider />
             <DialogContent>
-                <ItemsList fileNames={audioFiles} handleCurrentAudio={handleCurrentAudio} currentAudio={currentAudio} />
+                <ItemsList
+                    fileNames={audioFiles}
+                    handleCurrentAudio={handleCurrentAudio}
+                    currentAudio={currentAudio}
+                    settingName={settingName}
+                />
             </DialogContent>
         </Dialog>
     )
 }
 
-function ItemsList({ fileNames, handleCurrentAudio, currentAudio }) {
+function ItemsList({ fileNames, handleCurrentAudio, currentAudio, settingName }) {
+    const dispatch = useDispatch()
     const [selectedIndex, setSelectedIndex] = useState(null)
 
     const handleListItemClick = (event, index) => {
-        setSelectedIndex(index);
+        const audioAction = settingName === NIGHT_TIME_SOUND ? nightTimeAudioAction : wakeTimeAudioAction
+
+        console.log(settingName)
+
+        setSelectedIndex(index)
+        dispatch( audioAction(fileNames[index]) )
     }
 
     return (
         <List component="nav" aria-label="secondary mailbox folder">
             {
                 fileNames.map((fileName, index) => (
-                    <AudioItem 
+                    <AudioItem
                         key={fileName}
                         fileName={fileName}
                         currentAudio={currentAudio}
                         handleCurrentAudio={handleCurrentAudio}
-                        selectedIndex={selectedIndex} 
-                        index={index} 
-                        handleListItemClick={handleListItemClick} 
+                        selectedIndex={selectedIndex}
+                        index={index}
+                        handleListItemClick={handleListItemClick}
                     />
                 ))
             }
@@ -87,7 +102,7 @@ function AudioItem({ currentAudio, fileName, handleCurrentAudio, selectedIndex, 
     }
 
     useEffect(() => {
-        if(currentAudio) {
+        if (currentAudio) {
             currentAudio.play()
 
             setTimeout(() => {
@@ -96,7 +111,7 @@ function AudioItem({ currentAudio, fileName, handleCurrentAudio, selectedIndex, 
             }, 10000)
         }
 
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [currentAudio])
 
     return (

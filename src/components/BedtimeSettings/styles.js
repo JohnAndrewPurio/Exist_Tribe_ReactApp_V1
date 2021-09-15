@@ -106,6 +106,10 @@ export const useStyles = makeStyles((theme) => ({
 
     contrastText: {
         color: theme.palette.primary.contrastText
+    },
+
+    timePickerPaper: {
+        backgroundColor: theme.palette.primary.contrastText,
+        padding: theme.spacing(2)
     }
-    
 }))

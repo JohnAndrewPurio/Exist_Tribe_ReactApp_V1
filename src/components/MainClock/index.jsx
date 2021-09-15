@@ -9,8 +9,11 @@ import { useStyles } from './styles'
 import { levels, bedtimeSoundModes, NIGHT_LIGHT_TEXT, WAKE_LIGHT_TEXT, SOUND_TEXT } from '../../constants'
 import { bedtimeSoundAction, nightLightBrightnessLevelAction, nightLightStatusAction, wakeLightBrightnessLevelAction, wakeLightStatusAction } from '../../redux/actions/sleepConfiguration'
 
+let timerInterval = 0
+
 export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
     const classes = useStyles()
+    const [time, setTime] = useState( new Date().toLocaleTimeString() )
     const dispatch = useDispatch()
 
     const nightLightBrightnessLevel = useSelector(state => state.sleepConfiguration.nightLightBrightnessLevel)
@@ -47,15 +50,22 @@ export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wak
         dispatch(bedtimeSoundAction(bedtimeSoundModes[bedtimeSoundIndex]))
     }
 
+    useEffect(() => {
+        timerInterval = setInterval(() => {
+            setTime( () => new Date().toLocaleTimeString() )
+        }, 1000)
+
+        return () => {
+            clearInterval(timerInterval)
+        }
+    }, []) 
+
     return (
         <Paper elevation={3} className={classes.paper} >
             <Grid container>
                 <Grid item className={classes.containerBlock} xs={12} >
                     <Grid container alignItems="center" justifyContent="center">
-                        <CurrentHour />
-                        <Typography variant="h3">:</Typography>
-                        <CurrentMinutes />
-                        <TimeOfDay />
+                        <Typography variant="h3">{ time }</Typography>
                     </Grid>
                 </Grid>
 
@@ -86,64 +96,5 @@ export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wak
                 </Grid>
             </Grid>
         </Paper >
-    )
-}
-
-function CurrentHour() {
-    const [hours, setHours] = useState(new Date(Date.now()).getHours())
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setHours(new Date(Date.now()).getHours())
-        }, 1000)
-
-        return () => clearInterval(timer)
-    }, [])
-
-    console.log(hours)
-
-    return (
-        <Typography variant="h3">
-            {`0${String(hours > 12 ? hours - 12 : hours === 0 ? 12 : hours)}`.substr(-2)}
-        </Typography>
-    )
-}
-
-function CurrentMinutes() {
-    const [minutes, setMinutes] = useState(new Date(Date.now()).getMinutes())
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setMinutes(new Date(Date.now()).getMinutes())
-        }, 1000)
-
-        return () => clearInterval(timer)
-    }, [])
-
-    return (
-        <Typography variant="h3">
-            {`0${String(minutes)}`.substr(-2)}
-        </Typography>
-    )
-}
-
-function TimeOfDay() {
-    const classes = useStyles()
-    const date = new Date(Date.now())
-    const [timeOfDay, setTimeOfDay] = useState(date.getHours() < 12 ? 'AM' : 'PM')
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            const currentHours = new Date(Date.now()).getHours()
-            setTimeOfDay(currentHours < 12 ? 'AM' : 'PM')
-        }, 1000)
-
-        return () => clearInterval(timer)
-    }, [])
-
-    return (
-        <Typography className={classes.timeOfDay} variant="h3" >
-            {timeOfDay}
-        </Typography>
     )
 }

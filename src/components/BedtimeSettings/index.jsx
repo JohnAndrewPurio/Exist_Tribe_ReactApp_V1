@@ -420,7 +420,7 @@ function LightAdjustments({ settingName, iconState }) {
 
     return (
         <Paper className={classes.containerBlock} >
-            <Grid container justtifyContent="center" alignItems="center">
+            <Grid container justifyContent="center" alignItems="center">
                 <Grid item xs={3}>
                     <ToolTip title={camelCaseToUpperCase(settingName)}>
                         <IconButton onClick={brightnessAdjust} >

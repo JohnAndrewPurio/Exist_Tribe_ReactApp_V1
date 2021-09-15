@@ -1,10 +1,10 @@
 import { 
     BEDTIME_SOUND, NIGHT_LIGHT_STATUS, WAKE_LIGHT_STATUS,
     NIGHT_LIGHT_BRIGHTNESS, NIGHT_LIGHT_BRIGHTNESS_LEVEL, 
-    NIGHT_TIME_AUDIO, NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
-    SELECT_WAKE_TIME_SOUND, TOGGLE_SOUND_SELECTOR,
+    NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
+    SELECT_WAKE_TIME_SOUND, TOGGLE_WAKE_TIME_SOUND_SELECTOR,
     WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
-    WAKE_TIME, WAKE_TIME_AUDIO, WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
+    WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
 } from '../action_types/sleepConfiguration'
 
 import { levels, stops, sliderStops } from '../../constants'
@@ -16,8 +16,7 @@ const initState = {
     nightLightBrightness: 0,
     nightLightBrightnessLevel: 'low',
     nightLightOn: false,
-    
-    nightTimeAudio: null,
+
     nightTimeSoundVolume: 0,
     nightTimeSoundVolumeLevel: 'low',
 
@@ -25,7 +24,7 @@ const initState = {
     wakeLightBrightness: 0,
     wakeLightBrightnessLevel: 'low',
     wakeLightOn: false,
-    
+
     soundSelector: null,
 
     wakeTime: new Date( Date.now() + 8 * 60 * 60 * 1000 ),
@@ -40,19 +39,13 @@ export default function reducer(state = initState, action) {
     const selector = {}
     
     selector[BEDTIME_SOUND] = bedtimeSound
-
-    selector[NIGHT_TIME_AUDIO] = nightTimeAudio
     selector[NIGHT_LIGHT_BRIGHTNESS] = nightLightBrightness
     selector[NIGHT_LIGHT_BRIGHTNESS_LEVEL] = nightLightBrightnessLevel
     selector[NIGHT_LIGHT_STATUS] = nightLightStatus
     selector[NIGHT_TIME_SOUND_VOLUME] = nightTimeSoundVolume
     selector[NIGHT_TIME_SOUND_VOLUME_LEVEL] = nightTimeSoundVolumeLevel
-
     selector[SELECT_WAKE_TIME_SOUND] = selectWakeTimeSound
-    selector[TOGGLE_SOUND_SELECTOR] = toggleSoundSelector
-
-    selector[WAKE_TIME] = wakeTime
-    selector[WAKE_TIME_AUDIO] = wakeTimeAudio
+    selector[TOGGLE_WAKE_TIME_SOUND_SELECTOR] = toggleWakeTimeSoundSelector
     selector[WAKE_LIGHT_BRIGHTNESS] = wakeLightBrightness
     selector[WAKE_LIGHT_BRIGHTNESS_LEVEL] = wakeLightBrightnessLevel
     selector[WAKE_LIGHT_STATUS] = wakeLightStatus
@@ -89,10 +82,6 @@ function nightLightBrightnessLevel(state, payload) {
     return {...state, nightLightBrightnessLevel: currentLevel, nightLightBrightness: sliderStops[currentLevel] }
 }
 
-function nightTimeAudio(state, payload) {
-    return {...state, nightTimeAudio: payload}
-}
-
 function nightTimeSoundVolume(state, payload) {
     let count = 3
     let currentLevel = ''
@@ -121,12 +110,8 @@ function selectWakeTimeSound(state, payload) {
     return {...state, wakeTimeSound: payload}
 }
 
-function toggleSoundSelector(state, payload) {
+function toggleWakeTimeSoundSelector(state, payload) {
     return {...state, soundSelector: payload}
-}
-
-function wakeTime(state, payload) {
-    return {...state, wakeTime: payload}
 }
 
 function wakeLightBrightness(state, payload) {
@@ -151,10 +136,6 @@ function wakeLightBrightnessLevel(state, payload) {
 
 function wakeLightStatus(state, payload) {
     return {...state, wakeLightOn: payload}
-}
-
-function wakeTimeAudio(state, payload) {
-    return {...state, wakeTimeAudio: payload}
 }
 
 function wakeTimeSoundVolume(state, payload) {

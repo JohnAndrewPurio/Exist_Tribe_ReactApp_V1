@@ -4,7 +4,6 @@ import {
   useSelector 
 } from 'react-redux'
 
-import AudioSelectDialog from './components/AudioSelectDialog'
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
 
@@ -115,8 +114,6 @@ export default function App() {
         <Route path="/startBedtime" component={Bedtime} />
         <Route path="/" component={Home} />
       </Switch>
-
-      <AudioSelectDialog settingName={accordionExpanded} />
     </ThemeProvider>
   )
 }

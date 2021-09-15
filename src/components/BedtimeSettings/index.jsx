@@ -1,11 +1,16 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+// import AudioSelectDialog from '../AudioSelectDialog'
 import ToolTip from '../ToolTip'
 import camelCaseToUpperCase from '../../utils/camelCaseToUpperCase'
 
 import {
-    Accordion, AccordionDetails, AccordionSummary, Button, Chip, Divider,
-    Grid, IconButton, Paper, Slider, Typography
+    Accordion, AccordionDetails, AccordionSummary, Button, Chip, Divider, 
+    // FormControl, 
+    Grid, IconButton, 
+    // InputLabel, NativeSelect, 
+    Paper, Slider, Typography
 } from '@material-ui/core'
 import {
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
@@ -16,16 +21,18 @@ import {
 } from '@material-ui/icons'
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { PrettoSlider, useStyles } from './styles'
+import { 
+    // BootstrapInput, 
+    useStyles 
+} from './styles'
 
 import { levels, WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../../constants'
 import { handleAccordionExpanded } from '../../redux/actions/bedtime'
 import {
     nightLightBrightnessAction, nightLightBrightnessLevelAction, nightLightStatusAction,
     nightTimeSoundVolumeAction, nightTimeSoundVolumeLevelAction,
-    toggleSoundSelectorAction,
+    toggleWakeTimeSelectorAction,
     wakeLightBrightnessAction, wakeLightBrightnessLevelAction, wakeLightStatusAction,
-    wakeTimeAction,
     wakeTimeSoundVolumeAction, wakeTimeSoundVolumeLevelAction
 } from '../../redux/actions/sleepConfiguration'
 
@@ -151,8 +158,8 @@ function TimePicker({ label }) {
     const wakeTime = useSelector(state => state.sleepConfiguration.wakeTime)
 
     const handleDateChange = (date) => {
-        dispatch(wakeTimeAction(date))
-    }
+        dispatch(  )
+    };
 
     return (
         <Paper elevation={2} className={classes.timePickerPaper} >
@@ -229,7 +236,7 @@ function WakeOrSleepTimeSelection() {
                     </Paper>
                 </Grid>
             </Grid>
-        </Grid>
+        </Paper>
     )
 }
 
@@ -301,10 +308,10 @@ function SoundAdjustments({ settingName, iconState }) {
 
     const toggleSoundSelector = () => {
         if (settingName === NIGHT_TIME_SOUND)
-            dispatch(toggleSoundSelectorAction(NIGHT_TIME_SOUND)) // Update to toggleNightTimeSoundSelectorAction later
+            dispatch(toggleWakeTimeSelectorAction(NIGHT_TIME_SOUND)) // Update to toggleNightTimeSoundSelectorAction later
 
         if (settingName === WAKE_TIME_SOUND)
-            dispatch(toggleSoundSelectorAction(WAKE_TIME_SOUND))
+            dispatch(toggleWakeTimeSelectorAction(WAKE_TIME_SOUND)) 
     }
 
     return (
@@ -312,7 +319,7 @@ function SoundAdjustments({ settingName, iconState }) {
             <Grid item xs={12}>
                 <Grid container justifyContent="center" >
                     <Paper elevation={2} className={classes.containerBlock}>
-                        <Grid container justifyContent="center" alignItems="center">
+                        <Grid container justtifyContent="center" alignItems="center">
                             <Grid item xs={3}>
                                 <ToolTip title={camelCaseToUpperCase(settingName)}>
                                     <IconButton onClick={volumeAdjust}>

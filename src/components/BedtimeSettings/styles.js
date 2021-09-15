@@ -1,41 +1,28 @@
-import { makeStyles, Slider, withStyles } from '@material-ui/core'
+import { InputBase, makeStyles, withStyles } from '@material-ui/core'
 import { containerBlockWidth } from '../../constants'
 
-export const PrettoSlider = withStyles({
+export const BootstrapInput = withStyles((theme) => ({
     root: {
-      color: '#52af77',
-      height: 8,
+        'label + &': {
+            marginTop: theme.spacing(3),
+        },
     },
+    input: {
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: theme.palette.background.paper,
+        border: '1px solid #ced4da',
+        fontSize: 16,
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
 
-    thumb: {
-      height: 24,
-      width: 24,
-      backgroundColor: '#fff',
-      border: '2px solid currentColor',
-      marginTop: -8,
-      marginLeft: -12,
-      '&:focus, &:hover, &$active': {
-        boxShadow: 'inherit',
-      },
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: '#80bdff',
+            boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        },
     },
-
-    active: {},
-
-    valueLabel: {
-      left: 'calc(-50% + 4px)',
-    },
-
-    track: {
-      height: 8,
-      borderRadius: 4,
-    },
-
-    rail: {
-      height: 8,
-      borderRadius: 4,
-    }
-
-  })(Slider)
+}))(InputBase);
 
 export const useStyles = makeStyles((theme) => ({
     accordionMenu: {
@@ -91,7 +78,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     itemBlock: {
-        padding: theme.spacing(2)
+        padding: theme.spacing(1)
     },
 
     muteButton: {

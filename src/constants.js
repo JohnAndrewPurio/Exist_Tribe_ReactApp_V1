@@ -1,6 +1,3 @@
-export const audioFileNames = [
-    'DeepMeditation', 'QuietMorning', 'QuietTime', 'Tranquility'
-]
 export const containerBlockWidth = 350
 export const levels = ['low', 'medium', 'high']
 export const stops = [ 1, 51 ]

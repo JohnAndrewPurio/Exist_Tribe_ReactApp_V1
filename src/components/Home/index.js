@@ -1,5 +1,6 @@
 import NavBar from '../NavBar'
 import BedtimeSettings from '../BedtimeSettings'
+import SideDrawer from '../SideDrawer'
 
 import { useHistory } from 'react-router-dom'
 
@@ -18,6 +19,7 @@ export default function Home() {
     return (
         <>
             <NavBar />
+            <SideDrawer />
             <BedtimeSettings defaultSetting={true} />
             <Fab
                 className={classes.fab}

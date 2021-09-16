@@ -1,1 +1,2 @@
 export const SET_DARK_THEME = 'SET_DARK_THEME'
+export const TOGGLE_SIDE_DRAWER = 'TOGGLE_SIDE_DRAWER'

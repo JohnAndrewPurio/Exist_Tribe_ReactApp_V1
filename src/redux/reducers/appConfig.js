@@ -1,7 +1,8 @@
-import { SET_DARK_THEME } from "../action_types/appConfig"
+import { SET_DARK_THEME, TOGGLE_SIDE_DRAWER } from "../action_types/appConfig"
 
 const initState = {
-    darkTheme: true
+    darkTheme: true,
+    sideDrawer: false
 }
 
 export default function reducer(state = initState, action) {
@@ -9,6 +10,7 @@ export default function reducer(state = initState, action) {
     const selector = {}
 
     selector[SET_DARK_THEME] = setDarkTheme
+    selector[TOGGLE_SIDE_DRAWER] = toggleSideDrawer
 
     if(!selector[type]) return {...state}
 
@@ -17,4 +19,8 @@ export default function reducer(state = initState, action) {
 
 function setDarkTheme(state, payload) {
     return {...state, darkTheme: payload}
+}
+
+function toggleSideDrawer(state, payload) {
+    return {...state, sideDrawer: payload}
 }

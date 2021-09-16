@@ -56,7 +56,6 @@ export default function App() {
 
       type: darkTheme ? 'dark': 'light'
     }
-
   })
 
   // // uibuilder event listeners callbacks

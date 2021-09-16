@@ -1,4 +1,5 @@
 import { createTheme } from '@material-ui/core/styles'
+import { store } from './redux/store'
 
 export const theme = createTheme({
     typography: {
@@ -18,5 +19,7 @@ export const theme = createTheme({
             dark: '#999999',
             contrastText: '#3b4422',
         },
-    }
+    },
+
+    type: store.getState().appConfig.darkTheme ? 'dark': 'light'
 })

@@ -382,7 +382,6 @@ function VolumeSlider({ settingName }) {
             aria-labelledby="volume-slider"
             step={1}
             valueLabelDisplay="auto"
-            marks
             onChange={sliderValueHandler}
             value={currentSliderValue}
         />

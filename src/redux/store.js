@@ -3,12 +3,12 @@ import { combineReducers, createStore, applyMiddleware } from "redux" // For tro
 import logger from 'redux-logger' // For troubleshooting, comment out when sending to production
 import thunk from 'redux-thunk'
 
+import appConfig from "./reducers/appConfig"
 import bedtime from "./reducers/bedtime"
 import sleepConfiguration from "./reducers/sleepConfiguration"
-import withingsApi from "./reducers/withingsApi"
 
 const reducers = combineReducers({
-    bedtime, sleepConfiguration, withingsApi
+    appConfig, bedtime, sleepConfiguration
 })
 
 export const store = createStore(reducers, applyMiddleware(logger, thunk)) // For troubleshooting, comment out when sending to production

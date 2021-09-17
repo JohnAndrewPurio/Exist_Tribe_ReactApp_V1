@@ -111,8 +111,11 @@ export default function SleepBar() {
 function convertSecondsToHoursAndMinutes(seconds) {
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds - hours * 3600) / 60)
-    const remainingSeconds = Math.floor(seconds - hours * 3600 - minutes * 60)
+    // const remainingSeconds = Math.floor(seconds - hours * 3600 - minutes * 60)
 
-    return `${('0' + String(hours)).substr(-2)}:${('0' + String(minutes)).substr(-2)}:${('0' + String(remainingSeconds)).substr(-2)}`
+    // Timer with seconds included
+    // return `${('0' + String(hours)).substr(-2)}:${('0' + String(minutes)).substr(-2)}:${('0' + String(remainingSeconds)).substr(-2)}`
+
+    return `${('0' + String(hours)).substr(-2)}:${('0' + String(minutes)).substr(-2)}`
 }
 

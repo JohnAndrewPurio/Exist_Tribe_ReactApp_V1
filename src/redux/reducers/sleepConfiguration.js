@@ -13,12 +13,12 @@ const initState = {
     bedtimeSoundMode: 'mute',
 
     nightLightFadeout: 30,
-    nightLightBrightness: 0,
+    nightLightBrightness: 25,
     nightLightBrightnessLevel: 'low',
     nightLightOn: false,
     
     nightTimeAudio: null,
-    nightTimeSoundVolume: 0,
+    nightTimeSoundVolume: sliderStops['low'],
     nightTimeSoundVolumeLevel: 'low',
 
     wakeLightFadeout: 30,
@@ -31,7 +31,7 @@ const initState = {
     wakeTime: new Date( Date.now() + 8 * 60 * 60 * 1000 ),
     wakeTimeAudio: null,
     wakeTimeSound: null,
-    wakeTimeSoundVolume: 0,
+    wakeTimeSoundVolume: sliderStops['low'],
     wakeTimeSoundVolumeLevel: 'low'
 }
 

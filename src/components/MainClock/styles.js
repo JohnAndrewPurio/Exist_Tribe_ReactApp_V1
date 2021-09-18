@@ -13,10 +13,6 @@ export const useStyles = makeStyles((theme) => ({
         color: theme.palette.primary.contrastText
     },
 
-    shortcutControlsGroup: {
-        backgroundColor: theme.palette.primary.dark
-    },
-
     timeOfDay: {
         margin: theme.spacing(1)
     },

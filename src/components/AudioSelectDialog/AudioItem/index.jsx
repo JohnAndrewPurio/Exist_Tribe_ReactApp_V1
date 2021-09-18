@@ -11,8 +11,6 @@ export default function AudioItem({ fileName, handleListItemClick, currentIndex,
     const pause = null
     const testParam = currentAudioPlaying && currentIndex === currentAudioPlaying.index ? pause: play 
 
-    console.log(testParam)
-
     return (
         <ListItem
             button

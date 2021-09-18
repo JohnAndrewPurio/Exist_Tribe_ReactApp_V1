@@ -2,12 +2,13 @@ export const audioFileNames = [
     'DeepMeditation', 'QuietMorning', 'QuietTime', 'Tranquility'
 ]
 export const containerBlockWidth = 350
-export const levels = ['low', 'medium', 'high']
-export const stops = [ 1, 51 ]
+export const levels = ['muted', 'low', 'medium', 'high']
+export const stops = [ 1, 34, 68  ]
 
 export const sliderStops = {
-    low: 0,
-    medium: 50,
+    muted: 0,
+    low: 33,
+    medium: 67,
     high: 100
 }
 

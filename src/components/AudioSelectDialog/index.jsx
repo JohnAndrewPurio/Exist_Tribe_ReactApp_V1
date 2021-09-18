@@ -36,7 +36,7 @@ export default function AudioSelectDialog({ settingName }) {
                 className={classes.dialogTitle}
                 id="sound-title"
             >
-                Select {camelCaseToUpperCase(settingName || 'sound')}
+                {camelCaseToUpperCase(settingName || 'sound')}
             </DialogTitle>
             <Divider />
             <DialogContent>

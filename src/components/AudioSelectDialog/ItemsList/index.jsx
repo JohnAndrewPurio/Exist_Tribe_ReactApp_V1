@@ -19,11 +19,11 @@ export default function ItemsList({ fileNames, settingName }) {
 
         if(currentAudioPlaying) {
             currentAudioPlaying.targetAudio.pause()
-            dispatch(setCurrentAudioPlayingAction(null))
+            dispatch( setCurrentAudioPlayingAction(null) )
         }
 
-        dispatch(audioAction(fileNames[index]))
-        dispatch(toggleSoundSelectorAction(null))
+        dispatch( audioAction(fileNames[index]) )
+        dispatch( toggleSoundSelectorAction(null) )
     }
 
     const testCurrentAudio = (targetAudio, index) => {
@@ -31,7 +31,7 @@ export default function ItemsList({ fileNames, settingName }) {
             currentAudioPlaying.targetAudio.pause()
 
         if (!targetAudio) {
-            dispatch(setCurrentAudioPlayingAction(null))
+            dispatch( setCurrentAudioPlayingAction(null) )
 
             return
         }
@@ -43,7 +43,7 @@ export default function ItemsList({ fileNames, settingName }) {
     }
 
     const resetAudio = (targetAudio) => {
-        dispatch(setCurrentAudioPlayingAction(null))
+        dispatch( setCurrentAudioPlayingAction(null) )
         targetAudio.pause()
     }
 
@@ -52,8 +52,6 @@ export default function ItemsList({ fileNames, settingName }) {
             clearTimeout(timer)
             timer = null
         }
-
-        console.log('fired')
 
         if (!currentAudioPlaying)
             return

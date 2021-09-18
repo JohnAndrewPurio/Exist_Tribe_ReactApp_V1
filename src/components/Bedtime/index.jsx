@@ -5,12 +5,14 @@ import BedtimeSettingsDrawer from '../BedtimeSettingsDrawer'
 import MainClock from '../MainClock'
 import SleepBar from '../SleepBar'
 import SleepStatus from '../SleepStatus'
+import SoundBadge from './SoundBadge'
 
-import { Badge, IconButton, Grid } from '@material-ui/core'
+import { IconButton, Grid } from '@material-ui/core'
 import { 
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
     Brightness4Outlined, Brightness5Outlined, Brightness6Outlined,
-    KeyboardArrowUp, MusicNoteOutlined, MusicOffOutlined, WbSunnyOutlined 
+    KeyboardArrowUp, MusicNoteOutlined, MusicOffOutlined, SettingsBrightness,
+    WbSunnyOutlined 
 } from '@material-ui/icons'
 import { useStyles } from './styles'
 
@@ -40,12 +42,14 @@ export default function Bedtime() {
     }
 
     const nightLightIcons = {
+        muted: <SettingsBrightness className={classes.shortcutControls} />,
         low: <Brightness3Outlined className={classes.shortcutControls} />,
         medium: <Brightness2Outlined className={classes.shortcutControls} />,
         high: <Brightness1Outlined className={classes.shortcutControls} />,
     }
 
     const wakeLightIcons = {
+        muted: <SettingsBrightness className={classes.shortcutControls} />,
         low: <Brightness4Outlined className={classes.shortcutControls} />,
         medium: <Brightness6Outlined className={classes.shortcutControls} />,
         high: <Brightness5Outlined className={classes.shortcutControls} />,
@@ -56,6 +60,7 @@ export default function Bedtime() {
             console.log('bedtime unmounted')
             dispatch(resetBedtimeState())
         }
+
         // eslint-disable-next-line
     }, [])
 
@@ -99,20 +104,5 @@ export default function Bedtime() {
 
             <BedtimeSettingsDrawer />
         </>
-    )
-}
-
-function SoundBadge({ badge }) {
-    const classes = useStyles()
-
-    const anchorOrigin = {
-        vertical: 'bottom',
-        horizontal: 'right',
-    }
-
-    return (
-        <Badge badgeContent={badge} anchorOrigin={anchorOrigin} >
-            <MusicNoteOutlined className={classes.shortcutControls} />
-        </Badge>
     )
 }

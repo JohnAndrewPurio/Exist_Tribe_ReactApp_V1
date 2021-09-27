@@ -25,7 +25,7 @@ export default function NavBar() {
     }
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBar}>
             <Toolbar>
                 <IconButton
                     edge="start"

@@ -14,6 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     fab: {
         position: 'fixed',
         bottom: theme.spacing(3),
-        right: theme.spacing(3)
+        right: theme.spacing(3),
+        backgroundColor: theme.palette.primary.dark,
     }
 }))

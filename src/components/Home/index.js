@@ -24,8 +24,8 @@ export default function Home() {
             <Fab
                 className={classes.fab}
                 variant="extended"
-                color="primary"
                 onClick={startBedtime}
+                color='primary'
             >
                 <NightsStayOutlined className={classes.extendedIcon} />
                 Start Bedtime

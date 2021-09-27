@@ -5,6 +5,10 @@ import { SwipeableDrawer } from '@material-ui/core'
 
 import { toggleBedtimeDrawer } from '../../redux/actions/bedtime'
 
+/**
+ * Shows the Bedtime Settings in a Swipeable Drawer from the Bottom
+ * @returns {JSX} MaterialUISwipeableDrawer
+ */
 export default function BedtimeSettingsDrawer() {
     const dispatch = useDispatch()
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)

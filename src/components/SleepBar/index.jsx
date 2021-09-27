@@ -82,9 +82,8 @@ export default function SleepBar() {
     }, [bedtimeStart])
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBar}>
             <Toolbar>
-
                 {/* Calculated Sleep Time */}
                 <Typography variant="h6" className={classes.title}>
                     {convertSecondsToHoursAndMinutes(timeSinceStart)}

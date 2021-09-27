@@ -7,12 +7,12 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     root: {
-        padding: theme.spacing(3),
+        padding: theme.spacing(1),
         overflow: 'hidden',
-        height: '90vh',
+        // height: '90vh',
 
         '& > *': {
-            margin: theme.spacing(2)
+            margin: theme.spacing(1)
         }
     },
 

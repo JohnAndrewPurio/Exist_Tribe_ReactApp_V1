@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import AudioPlayer from '../AudioPlayer'
 import ShortcutControls from './ShortcutControls'
 
 import { Grid, Paper, Typography } from '@material-ui/core'
@@ -17,30 +18,32 @@ let timerInterval = 0
 **/
 export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
     const classes = useStyles()
-    const [time, setTime] = useState( new Date().toLocaleTimeString() )
+    const [time, setTime] = useState(new Date().toLocaleTimeString())
 
     useEffect(() => {
         timerInterval = setInterval(() => {
-            setTime( () => new Date().toLocaleTimeString() )
+            setTime(() => new Date().toLocaleTimeString())
         }, 1000)
 
         return () => {
             clearInterval(timerInterval)
         }
-    }, []) 
+    }, [])
 
     return (
         <Paper elevation={3} className={classes.paper} >
-            <Grid container>
+            <Grid container alignItems="center" >
                 <Grid item className={classes.containerBlock} xs={12} >
                     <Grid container alignItems="center" justifyContent="center">
-                        <Typography variant="h3">{ time }</Typography>
+                        <Typography variant="h3">{time}</Typography>
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12}>
+                <AudioPlayer />
+
+                <Grid item className={classes.containerBlock} xs={12}>
                     <Grid container justifyContent="center">
-                        <ShortcutControls 
+                        <ShortcutControls
                             bedtimeSoundModesIcons={bedtimeSoundModesIcons}
                             nightLightIcons={nightLightIcons}
                             wakeLightIcons={wakeLightIcons}

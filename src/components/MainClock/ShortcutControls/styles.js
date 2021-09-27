@@ -6,6 +6,6 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     shortcutControlsGroup: {
-        backgroundColor: theme.palette.primary.dark
+        backgroundColor: theme.palette.primary.main
     }
 }))

@@ -5,6 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     paper: {
         width: containerBlockWidth,
         height: 325,
-        padding: theme.spacing(2)
+        padding: theme.spacing(2),
+        backgroundColor: theme.palette.primary.dark
     }
 }))

@@ -22,7 +22,7 @@ const initState = {
     nightTimeSoundVolumeLevel: 'low',
 
     wakeLightFadeout: 30,
-    wakeLightBrightness: 0,
+    wakeLightBrightness: 25,
     wakeLightBrightnessLevel: 'low',
     wakeLightOn: false,
     

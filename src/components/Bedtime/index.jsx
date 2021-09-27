@@ -18,8 +18,8 @@ import { useStyles } from './styles'
 import { toggleBedtimeDrawer } from '../../redux/actions/bedtime'
 
 /**
- * 
- * @returns 
+ * The Bedtime Page which consists of the sleep timer, the main clock, shortcut controls,
+ * and bedtime session settings configuration
  */
 export default function Bedtime() {
     const classes = useStyles()

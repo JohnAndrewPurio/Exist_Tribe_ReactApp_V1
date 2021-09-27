@@ -6,6 +6,10 @@ import { useStyles } from './styles'
 
 import { setDarkThemeAction, toggleSideDrawerAction } from '../../redux/actions/appConfig'
 
+/**
+ * Displays an AppBar with a hamburger menu button and the dark theme toggle
+ * @return {JSX} MaterialUiAppBar - AppBar with menu options and theme toggle
+ */
 export default function NavBar() {
     const classes = useStyles()
     const dispatch = useDispatch()

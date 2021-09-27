@@ -1,9 +1,14 @@
-import { HANDLE_ACCORDION_EXPANDED, RESET_BEDTIME_STATE, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER } from "../action_types/bedtime"
+// @ts-check
+
+import { 
+    HANDLE_ACCORDION_EXPANDED, RESET_BEDTIME_STATE, SET_DEFAULT_CONFIGURATIONS, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
+} from "../action_types/bedtime"
 
 const initState = {
     accordionExpanded: null,
     bedtimeStart: null,
     bedtimeDrawerExpanded: false,
+    defaultConfig: {},
     pauseTime: null,
     timePaused: 0
 }
@@ -12,6 +17,7 @@ export default function reducer(state = initState, action) {
     const {type, payload} = action
     const selector = {}
     
+    selector[SET_DEFAULT_CONFIGURATIONS] = selectorDefaultConfigurations
     selector[HANDLE_ACCORDION_EXPANDED] = handleAccordionExpanded
     selector[RESET_BEDTIME_STATE] = resetBedtimeState
     selector[SET_PAUSE_TIME] = setPauseTime
@@ -29,7 +35,11 @@ function handleAccordionExpanded(state, payload) {
 }
 
 function resetBedtimeState(state, payload) {
-    return {...initState}
+    return { ...initState }
+}
+
+function selectorDefaultConfigurations(state, payload) {
+    return { ...payload }
 }
 
 function setPauseTime(state, payload) {

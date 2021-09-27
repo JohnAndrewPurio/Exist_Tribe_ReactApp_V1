@@ -18,7 +18,7 @@ import {
 * @param {Object} props - Passed props by the parent component
 * @param {string} props.settingName - Value either 'nightTimeSound' or 'wakeTimeSound'
 * @param {string} props.iconState - Value of 'muted', 'low', 'medium', 'high'
-* @return {JSX} MaterialUiGrid - Container of the slider and button shortcut
+* @returns {JSX} MaterialUiGrid - Container of the slider and button shortcut
 **/
 export default function SoundAdjustments({ settingName, iconState }) {
     const classes = useStyles()

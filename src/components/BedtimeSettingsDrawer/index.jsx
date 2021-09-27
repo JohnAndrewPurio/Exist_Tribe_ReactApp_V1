@@ -28,7 +28,7 @@ export default function BedtimeSettingsDrawer() {
                 onClose={() => toggleDrawer(false)}
                 onOpen={() => toggleDrawer(true)}
             >
-                <BedtimeSettings />
+                <BedtimeSettings defaultSetting={false} />
             </SwipeableDrawer>
         </>
     )

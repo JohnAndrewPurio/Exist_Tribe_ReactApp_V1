@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import BedtimeSettingsDrawer from '../BedtimeSettingsDrawer'
@@ -16,8 +15,12 @@ import {
 } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-import { resetBedtimeState, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
+import { toggleBedtimeDrawer } from '../../redux/actions/bedtime'
 
+/**
+ * 
+ * @returns 
+ */
 export default function Bedtime() {
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -54,15 +57,6 @@ export default function Bedtime() {
         medium: <Brightness6Outlined className={classes.shortcutControls} />,
         high: <Brightness5Outlined className={classes.shortcutControls} />,
     }
-
-    useEffect(() => {
-        return () => {
-            console.log('bedtime unmounted')
-            dispatch(resetBedtimeState())
-        }
-
-        // eslint-disable-next-line
-    }, [])
 
     return (
         <>

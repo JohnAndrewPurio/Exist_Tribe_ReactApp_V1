@@ -1,14 +1,12 @@
-// @ts-check
-
 import { 
-    HANDLE_ACCORDION_EXPANDED, RESET_BEDTIME_STATE, SET_DEFAULT_CONFIGURATIONS, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
+    HANDLE_ACCORDION_EXPANDED, SET_DEFAULT_CONFIGURATIONS, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
 } from "../action_types/bedtime"
 
 const initState = {
     accordionExpanded: null,
     bedtimeStart: null,
     bedtimeDrawerExpanded: false,
-    defaultConfig: {},
+    defaultConfigurations: {},
     pauseTime: null,
     timePaused: 0
 }
@@ -17,9 +15,8 @@ export default function reducer(state = initState, action) {
     const {type, payload} = action
     const selector = {}
     
-    selector[SET_DEFAULT_CONFIGURATIONS] = selectorDefaultConfigurations
+    selector[SET_DEFAULT_CONFIGURATIONS] = setDefaultConfigurations
     selector[HANDLE_ACCORDION_EXPANDED] = handleAccordionExpanded
-    selector[RESET_BEDTIME_STATE] = resetBedtimeState
     selector[SET_PAUSE_TIME] = setPauseTime
     selector[SET_TIME_PAUSED] = setTimePaused
     selector[START_BEDTIME] = startBedtime
@@ -34,12 +31,8 @@ function handleAccordionExpanded(state, payload) {
     return {...state, accordionExpanded: payload}
 }
 
-function resetBedtimeState(state, payload) {
-    return { ...initState }
-}
-
-function selectorDefaultConfigurations(state, payload) {
-    return { ...payload }
+function setDefaultConfigurations(state, payload) {
+    return { ...state, defaultConfigurations: JSON.parse( JSON.stringify(payload) ) }
 }
 
 function setPauseTime(state, payload) {

@@ -1,7 +1,7 @@
 import { 
     BEDTIME_SOUND, NIGHT_LIGHT_STATUS, WAKE_LIGHT_STATUS,
     NIGHT_LIGHT_BRIGHTNESS, NIGHT_LIGHT_BRIGHTNESS_LEVEL, 
-    NIGHT_TIME_AUDIO, NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL,
+    NIGHT_TIME_AUDIO, NIGHT_TIME_SOUND_VOLUME, NIGHT_TIME_SOUND_VOLUME_LEVEL, RESET_TO_DEFAULT,
     SELECT_WAKE_TIME_SOUND, TOGGLE_SOUND_SELECTOR,
     WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
     WAKE_TIME, WAKE_TIME_AUDIO, WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
@@ -48,6 +48,7 @@ export default function reducer(state = initState, action) {
     selector[NIGHT_TIME_SOUND_VOLUME] = nightTimeSoundVolume
     selector[NIGHT_TIME_SOUND_VOLUME_LEVEL] = nightTimeSoundVolumeLevel
 
+    selector[RESET_TO_DEFAULT] = resetToDefault
     selector[SELECT_WAKE_TIME_SOUND] = selectWakeTimeSound
     selector[TOGGLE_SOUND_SELECTOR] = toggleSoundSelector
 
@@ -115,6 +116,10 @@ function nightTimeSoundVolumeLevel(state, payload) {
 
 function nightLightStatus(state, payload) {
     return {...state, nightLightOn: payload}
+}
+
+function resetToDefault(state, payload) {
+    return {...payload}
 }
 
 function selectWakeTimeSound(state, payload) {

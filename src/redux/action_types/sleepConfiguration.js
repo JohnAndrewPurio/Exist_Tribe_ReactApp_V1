@@ -21,3 +21,5 @@ export const WAKE_LIGHT_STATUS = 'WAKE_LIGHT_STATUS'
 
 export const WAKE_TIME = 'WAKE_TIME'
 
+export const RESET_TO_DEFAULT = 'RESET_TO_DEFAULT'
+

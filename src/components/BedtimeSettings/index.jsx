@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import AccordionMenu from './AccordionMenu'
 import LightAdjustments from './LightAdjustments'
@@ -7,10 +8,12 @@ import SoundAdjustments from './SoundAdjustments'
 import WakeOrSleepTimeSelection from './WakeOrSleepTimeSelection'
 
 import { Grid, Paper, Typography } from '@material-ui/core'
-import { Brightness2Outlined,ExpandMore, WbSunnyOutlined } from '@material-ui/icons'
+import { Brightness2Outlined, ExpandMore, WbSunnyOutlined } from '@material-ui/icons'
 import { useStyles } from './styles'
 
 import { WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../../constants'
+import { setDefaultConfigurations } from '../../redux/actions/bedtime'
+import { resetToDefaultAction } from '../../redux/actions/sleepConfiguration'
 
 /**
 * Displays all the available settings that the user can configure
@@ -20,6 +23,7 @@ import { WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../.
 **/
 export default function BedtimeSettings({ defaultSetting }) {
     const classes = useStyles()
+    const dispatch = useDispatch()
 
     const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
 
@@ -30,6 +34,9 @@ export default function BedtimeSettings({ defaultSetting }) {
     const wakeLightBrightnessLevel = useSelector(state => state.sleepConfiguration.wakeLightBrightnessLevel)
     const wakeTimeSoundVolumeLevel = useSelector(state => state.sleepConfiguration.wakeTimeSoundVolumeLevel)
     const wakeLightOn = useSelector(state => state.sleepConfiguration.wakeLightOn)
+
+    const currentSleepConfig = useSelector(state => state.sleepConfiguration)
+    const defaultSleepConfig = useSelector(state => state.bedtime.defaultConfigurations)
 
     const sleepConfigurations = [
         {
@@ -85,6 +92,42 @@ export default function BedtimeSettings({ defaultSetting }) {
         }
     ]
 
+    const sleepConfigComponentsRenderer = (config) => {
+        const { name } = config
+
+        if (config.divider) {
+            return (
+                <SectionDivider key={name} sectionName={name} />
+            )
+        }
+
+        return (
+            <AccordionMenu
+                key={name}
+                config={config}
+                expanded={accordionExpanded}
+                lightOn={config.light}
+            />
+        )
+    }
+
+    useEffect(() => {
+        if (defaultSetting)
+            dispatch( setDefaultConfigurations(currentSleepConfig) )
+
+        //eslint-disable-next-line    
+    }, [])
+
+    useEffect(() => {
+        return () => {
+
+            if( defaultSetting === false )
+                dispatch( resetToDefaultAction(defaultSleepConfig) )
+        }
+
+        //eslint-disable-next-line    
+    }, [defaultSleepConfig])
+
     return (
         <Grid container className={classes.drawer} >
             <Grid item xs={12} className={classes.itemBlock} >
@@ -95,26 +138,7 @@ export default function BedtimeSettings({ defaultSetting }) {
                                 : <></>
                         }
                         {
-                            sleepConfigurations.map(config => {
-                                const { name } = config
-
-                                if (config.divider) {
-                                    return (
-                                        <SectionDivider key={name} sectionName={name} />
-                                    )
-                                }
-
-                                return (
-                                    <AccordionMenu
-                                        key={name}
-                                        config={config}
-                                        expanded={accordionExpanded}
-                                        lightOn={config.light}
-                                    />
-                                )
-                            }
-
-                            )
+                            sleepConfigurations.map(sleepConfigComponentsRenderer)
                         }
                     </Paper>
                 </Grid>

@@ -10,6 +10,10 @@ import { setPauseTime, setTimePaused, startBedtime } from '../../redux/actions/b
 
 let timer
 
+/**
+ * App Bar when in bedtime has session(bedtime has started)
+ * @returns {JSX} MaterialUIAppBar
+ */
 export default function SleepBar() {
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -34,18 +38,26 @@ export default function SleepBar() {
         if (!amountOfTimePaused)
             amountOfTimePaused = 0
 
-        dispatch(setTimePaused(amountOfTimePaused + timeBetweenPauseAndPlay))
-        dispatch(setPauseTime(null))
+        dispatch(
+            setTimePaused( amountOfTimePaused + timeBetweenPauseAndPlay )
+        )
+
+        dispatch(
+            setPauseTime( null )
+        )
     }
 
     const stopBedtime = () => {
-        dispatch(startBedtime(null))
+        dispatch( 
+            startBedtime(null) 
+        )
+
         history.push('/')
     }
 
     const incrementTimer = () => {
         const paused = !!pauseTime
-        const currentTimeDiff = (Date.now() - bedtimeStart) / 1000
+        const currentTimeDiff = ( Date.now() - bedtimeStart ) / 1000
 
         if (!paused)
             setTimeSinceStart(() => currentTimeDiff - timePaused)
@@ -72,12 +84,14 @@ export default function SleepBar() {
 
     useEffect(() => {
         if (!bedtimeStart) {
-            dispatch(startBedtime(Date.now()))
+            dispatch( 
+                startBedtime( Date.now() ) 
+            )
             
             return
         }
         
-        timer = setInterval(incrementTimer, 1000)
+        timer = setInterval( incrementTimer, 1000 )
         // eslint-disable-next-line
     }, [bedtimeStart])
 
@@ -108,8 +122,8 @@ export default function SleepBar() {
 }
 
 function convertSecondsToHoursAndMinutes(seconds) {
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds - hours * 3600) / 60)
+    const hours = Math.floor( seconds / 3600 )
+    const minutes = Math.floor( ( seconds - hours * 3600 ) / 60 )
     // const remainingSeconds = Math.floor(seconds - hours * 3600 - minutes * 60)
 
     // Timer with seconds included

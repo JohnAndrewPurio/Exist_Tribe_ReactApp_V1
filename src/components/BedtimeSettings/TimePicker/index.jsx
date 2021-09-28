@@ -17,10 +17,10 @@ export default function TimePicker({ label }) {
     }
 
     return (
-        <Paper elevation={2} className={classes.timePickerPaper} >
+        <Paper elevation={2} className={classes.timePickerPaper}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardTimePicker
-                    color="primary"
+                    color='primary'
                     inputVariant="outlined"
                     margin="normal"
                     id={label}

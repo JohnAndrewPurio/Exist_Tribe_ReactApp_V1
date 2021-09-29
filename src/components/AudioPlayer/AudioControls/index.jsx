@@ -4,7 +4,7 @@
  * 2) Pause/Play
  * 3) Forward || Next
  */
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import ToolTip from '../../ToolTip'
 
@@ -12,12 +12,25 @@ import { ButtonGroup, IconButton } from '@material-ui/core'
 import { Pause, PlayArrow, SkipNext, SkipPrevious } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-export default function AudioControls() {
+export default function AudioControls({ currentAudio }) {
     const classes = useStyles()
     const [isPlaying, setIsPlaying] = useState(false)
 
     const togglePausePlay = (state, toggleState) => {
         toggleState(!state)
+        
+        if(!state) {
+            currentAudio.current.play()
+
+            return
+        }
+
+        currentAudio.current.pause()
+    }
+
+    if(currentAudio.current) {
+        console.log(currentAudio.current)
+        console.log(currentAudio.current.volume)
     }
 
     return (

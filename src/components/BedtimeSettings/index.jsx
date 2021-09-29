@@ -114,21 +114,21 @@ export default function BedtimeSettings({ defaultSetting }) {
 
     // Notice: Will cause an error when the page is reloaded and the BedtimeSettingsDrawer is opened
     // if the default config is an empty object
-    useEffect(() => {
-        if ( defaultSetting && !bedtimeStart )
-            dispatch( setDefaultConfigurations( currentSleepConfig ) )
+    // useEffect(() => {
+    //     if ( defaultSetting && !bedtimeStart )
+    //         dispatch( setDefaultConfigurations( currentSleepConfig ) )
 
-        //eslint-disable-next-line    
-    }, [])
+    //     //eslint-disable-next-line    
+    // }, [])
 
-    useEffect(() => {
-        return () => {
-            if( !defaultSetting )
-                dispatch( resetToDefaultAction( defaultSleepConfig ) )
-        }
+    // useEffect(() => {
+    //     return () => {
+    //         if( !defaultSetting )
+    //             dispatch( resetToDefaultAction( defaultSleepConfig ) )
+    //     }
 
-        //eslint-disable-next-line    
-    }, [defaultSleepConfig])
+    //     //eslint-disable-next-line    
+    // }, [defaultSleepConfig])
 
     return (
         <Grid container className={classes.drawer} >

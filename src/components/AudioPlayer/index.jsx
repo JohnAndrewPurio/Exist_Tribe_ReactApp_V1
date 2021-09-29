@@ -7,6 +7,7 @@
  * Bonus:
  *  Animate the appearance and disappearance of the Audio Player
  */
+import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import AudioControls from './AudioControls'
@@ -22,26 +23,38 @@ import { audioFiles } from '../../constants'
  */
 export default function AudioPlayer() {
     const classes = useStyles()
+    const audioRef = useRef()
     const nightTimeAudio = useSelector(state => state.sleepConfiguration.nightTimeAudio)
     const wakeTimeAudio = useSelector(state => state.sleepConfiguration.wakeTimeAudio)
+    const nightTimeSoundVolume = useSelector(state => state.sleepConfiguration.nightTimeSoundVolume)
 
-    console.log('Night Time Audio:')
-    console.log( audioFiles[nightTimeAudio] )
-    console.log('Wake Time Audio:')
-    console.log(wakeTimeAudio)
+    useEffect(() => {
+        if(audioRef.current)
+            audioRef.current.volume = nightTimeSoundVolume / 100
+    }, [ nightTimeSoundVolume ])
 
     return (
         <>
+            {
+                nightTimeAudio 
+                && <audio 
+                        ref={ audioRef }
+                        src={ audioFiles[nightTimeAudio] } 
+                        loop 
+                    />
+            }
             <Grid item className={classes.containerBlock} xs={12}>
                 <Grid container justifyContent="center">
                     <Typography variant="h6" className={classes.musicName}>
-                        Music Name
+                        {
+                            nightTimeAudio || 'No Sound Selected'
+                        }
                     </Typography>
                 </Grid>
             </Grid>
             <Grid item className={classes.containerBlock} xs={12}>
                 <Grid container justifyContent="center">
-                    <AudioControls />
+                    <AudioControls currentAudio={audioRef} />
                 </Grid>
             </Grid>
         </>

@@ -6,34 +6,11 @@ import {
     WAKE_LIGHT_BRIGHTNESS, WAKE_LIGHT_BRIGHTNESS_LEVEL, 
     WAKE_TIME, WAKE_TIME_AUDIO, WAKE_TIME_SOUND_VOLUME, WAKE_TIME_SOUND_VOLUME_LEVEL
 } from '../action_types/sleepConfiguration'
+import { defaultSleepConfigurations } from '../defaults'
 
 import { levels, stops, sliderStops } from '../../constants'
 
-const initState = {
-    bedtimeSoundMode: 'mute',
-
-    nightLightFadeout: 30,
-    nightLightBrightness: 25,
-    nightLightBrightnessLevel: 'low',
-    nightLightOn: false,
-    
-    nightTimeAudio: null,
-    nightTimeSoundVolume: sliderStops['low'],
-    nightTimeSoundVolumeLevel: 'low',
-
-    wakeLightFadeout: 30,
-    wakeLightBrightness: 25,
-    wakeLightBrightnessLevel: 'low',
-    wakeLightOn: false,
-    
-    soundSelector: null,
-
-    wakeTime: new Date( Date.now() + 8 * 60 * 60 * 1000 ),
-    wakeTimeAudio: null,
-    wakeTimeSound: null,
-    wakeTimeSoundVolume: sliderStops['low'],
-    wakeTimeSoundVolumeLevel: 'low'
-}
+const initState = defaultSleepConfigurations
 
 export default function reducer(state = initState, action) {
     const {type, payload} = action
@@ -166,7 +143,7 @@ function wakeTimeSoundVolume(state, payload) {
     let count = 3
     let currentLevel = ''
 
-    for(count = 0; count < stops.length; count++) {
+    for(let count = 0; count < stops.length; count++) {
         if(payload < stops[count])
             break
     }

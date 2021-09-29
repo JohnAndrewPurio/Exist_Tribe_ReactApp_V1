@@ -1,8 +1,18 @@
-export const audioFileNames = [
-    'DeepMeditation', 'QuietMorning', 'QuietTime', 'Tranquility'
-]
+// export const audioFileNames = [
+//     'DeepMeditation', 'QuietMorning', 'QuietTime', 'Tranquility'
+// ]
+import DeepMeditation from './audio/DeepMeditation.mp3'
+import QuietMorning from './audio/QuietMorning.mp3'
+import QuietTime from './audio/QuietTime.mp3'
+import Tranquility from './audio/Tranquility.mp3'
+
+export const audioFiles = {
+    DeepMeditation, QuietMorning, QuietTime, Tranquility
+}
+
 export const containerBlockWidth = 350
 export const levels = ['muted', 'low', 'medium', 'high']
+// export const stops = [ 1, 26, 51, 76  ]
 export const stops = [ 1, 34, 68  ]
 
 export const sliderStops = {

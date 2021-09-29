@@ -16,7 +16,7 @@ import {
 * @param {Object} props.bedtimeSoundModesIcons - Contains the JSX elements of icons to Display for the Sound Shortcuts
 * @param {Object} props.nightLightIcons - Contains the JSX elements of icons to Display for the Night Light Shortcut
 * @param {Object} props.wakeLightIcons - Contains the JSX elements of icons to Display for the Wake Light Shortcut
-* @return {JSX} MaterialUiButtonGroup- Container of the digital clock and the shortcut controls
+* @returns MaterialUiButtonGroup- Container of the digital clock and the shortcut controls
 **/
 export default function ShortcutControls({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
     const classes = useStyles()
@@ -34,16 +34,16 @@ export default function ShortcutControls({ bedtimeSoundModesIcons, nightLightIco
 
         if (light === 'nightLight') {
             if (!state)
-                dispatch(nightLightStatusAction(true))
+                dispatch( nightLightStatusAction(true) )
 
-            dispatch(nightLightBrightnessLevelAction(levelValue))
+            dispatch( nightLightBrightnessLevelAction(levelValue) )
         }
 
         if (light === 'wakeLight') {
             if (!state)
-                dispatch(wakeLightStatusAction(true))
+                dispatch( wakeLightStatusAction(true) )
 
-            dispatch(wakeLightBrightnessLevelAction(levelValue))
+            dispatch( wakeLightBrightnessLevelAction(levelValue) )
         }
     }
 
@@ -53,7 +53,9 @@ export default function ShortcutControls({ bedtimeSoundModesIcons, nightLightIco
         if (bedtimeSoundIndex === bedtimeSoundModes.length)
             bedtimeSoundIndex = 0
 
-        dispatch(bedtimeSoundAction(bedtimeSoundModes[bedtimeSoundIndex]))
+        dispatch( 
+            bedtimeSoundAction( bedtimeSoundModes[bedtimeSoundIndex] ) 
+        )
     }
 
     return (

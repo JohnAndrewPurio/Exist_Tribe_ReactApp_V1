@@ -7,62 +7,43 @@
  * Bonus:
  *  Animate the appearance and disappearance of the Audio Player
  */
-import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { Grid, IconButton, Paper, Typography } from '@material-ui/core'
-import { Close, Pause, PlayArrow } from '@material-ui/icons'
+import AudioControls from './AudioControls'
+
+import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './styles'
+
+import { audioFiles } from '../../constants'
 
 /**
  * Creates an Audio Player which displays the current Audio Playing with Pause/Play toggle and an Exit Button
- *  
+ * @returns MaterialUIGrid
  */
 export default function AudioPlayer() {
     const classes = useStyles()
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [hidden, setHidden] = useState(false)
+    const nightTimeAudio = useSelector(state => state.sleepConfiguration.nightTimeAudio)
+    const wakeTimeAudio = useSelector(state => state.sleepConfiguration.wakeTimeAudio)
 
-    const gridStyle = {
-        opacity: !hidden ? 1 : 0,
-    }
-
-    const togglePausePlay = (state, toggleState) => {
-        toggleState(!state)
-    }
-
-    const hideMusicPlayer = (hide) => {
-        hide(true)
-    }
+    console.log('Night Time Audio:')
+    console.log( audioFiles[nightTimeAudio] )
+    console.log('Wake Time Audio:')
+    console.log(wakeTimeAudio)
 
     return (
-        <Grid item className={classes.containerBlock} xs={12} style={gridStyle}>
-            <Paper elevation={3} className={classes.paper}>
-                <Grid container alignItems="center">
-                    <Grid item xs={8}>
-                        <Typography variant="h6" className={classes.text}>
-                            Music Name
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <IconButton
-                            onClick={() => togglePausePlay(isPlaying, setIsPlaying)}
-                        >
-                            {
-                                !isPlaying ? <PlayArrow />
-                                    : <Pause />
-                            }
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <IconButton
-                            onClick={() => hideMusicPlayer(setHidden)}
-                        >
-                            <Close />
-                        </IconButton>
-                    </Grid>
+        <>
+            <Grid item className={classes.containerBlock} xs={12}>
+                <Grid container justifyContent="center">
+                    <Typography variant="h6" className={classes.musicName}>
+                        Music Name
+                    </Typography>
                 </Grid>
-            </Paper>
-        </Grid>
+            </Grid>
+            <Grid item className={classes.containerBlock} xs={12}>
+                <Grid container justifyContent="center">
+                    <AudioControls />
+                </Grid>
+            </Grid>
+        </>
     )
 }
-

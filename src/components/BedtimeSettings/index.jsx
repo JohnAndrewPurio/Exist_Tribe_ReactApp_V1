@@ -26,6 +26,7 @@ export default function BedtimeSettings({ defaultSetting }) {
     const dispatch = useDispatch()
 
     const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
+    const bedtimeStart = useSelector(state => state.bedtime.bedtimeStart)
 
     const nightLightBrightnessLevel = useSelector(state => state.sleepConfiguration.nightLightBrightnessLevel)
     const nightTimeSoundVolumeLevel = useSelector(state => state.sleepConfiguration.nightTimeSoundVolumeLevel)
@@ -111,18 +112,19 @@ export default function BedtimeSettings({ defaultSetting }) {
         )
     }
 
+    // Notice: Will cause an error when the page is reloaded and the BedtimeSettingsDrawer is opened
+    // if the default config is an empty object
     useEffect(() => {
-        if (defaultSetting)
-            dispatch( setDefaultConfigurations(currentSleepConfig) )
+        if ( defaultSetting && !bedtimeStart )
+            dispatch( setDefaultConfigurations( currentSleepConfig ) )
 
         //eslint-disable-next-line    
     }, [])
 
     useEffect(() => {
         return () => {
-
-            if( defaultSetting === false )
-                dispatch( resetToDefaultAction(defaultSleepConfig) )
+            if( !defaultSetting )
+                dispatch( resetToDefaultAction( defaultSleepConfig ) )
         }
 
         //eslint-disable-next-line    

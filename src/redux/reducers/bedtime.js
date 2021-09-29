@@ -1,12 +1,13 @@
 import { 
     HANDLE_ACCORDION_EXPANDED, SET_DEFAULT_CONFIGURATIONS, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
 } from "../action_types/bedtime"
+import { defaultSleepConfigurations } from '../defaults'
 
 const initState = {
     accordionExpanded: null,
     bedtimeStart: null,
     bedtimeDrawerExpanded: false,
-    defaultConfigurations: {},
+    defaultSleepConfigurations,
     pauseTime: null,
     timePaused: 0
 }

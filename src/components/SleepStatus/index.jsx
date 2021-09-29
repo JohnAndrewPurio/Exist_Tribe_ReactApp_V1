@@ -53,7 +53,7 @@ export default function SleepStatus() {
     ]
 
     return (
-        <Paper elevation={2} className={classes.paper} >
+        <Paper elevation={1} className={classes.paper} >
             <Typography variant="h6">Status: </Typography>
 
             <Grid container justifyContent="center" >

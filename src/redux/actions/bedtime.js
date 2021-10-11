@@ -1,9 +1,20 @@
 import { 
-    HANDLE_ACCORDION_EXPANDED, SET_DEFAULT_CONFIGURATIONS, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
+    HANDLE_ACCORDION_EXPANDED, SET_CURRENT_AUDIO_PLAYING, SET_CURRENT_AUDIO_REF, SET_DEFAULT_CONFIGURATIONS, 
+    SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
 } from "../action_types/bedtime"
 
 export const handleAccordionExpanded = (payload) => ({
     type: HANDLE_ACCORDION_EXPANDED,
+    payload
+})
+
+export const setCurrentAudioPlaying = (payload) => ({
+    type: SET_CURRENT_AUDIO_PLAYING,
+    payload
+})
+
+export const setCurrentAudioRef = (payload) => ({
+    type: SET_CURRENT_AUDIO_REF,
     payload
 })
 

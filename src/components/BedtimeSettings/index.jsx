@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import AccordionMenu from './AccordionMenu'
 import LightAdjustments from './LightAdjustments'
@@ -12,8 +11,6 @@ import { Brightness2Outlined, ExpandMore, WbSunnyOutlined } from '@material-ui/i
 import { useStyles } from './styles'
 
 import { WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../../constants'
-import { setDefaultConfigurations } from '../../redux/actions/bedtime'
-import { resetToDefaultAction } from '../../redux/actions/sleepConfiguration'
 
 /**
 * Displays all the available settings that the user can configure
@@ -23,10 +20,8 @@ import { resetToDefaultAction } from '../../redux/actions/sleepConfiguration'
 **/
 export default function BedtimeSettings({ defaultSetting }) {
     const classes = useStyles()
-    const dispatch = useDispatch()
 
     const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
-    const bedtimeStart = useSelector(state => state.bedtime.bedtimeStart)
 
     const nightLightBrightnessLevel = useSelector(state => state.sleepConfiguration.nightLightBrightnessLevel)
     const nightTimeSoundVolumeLevel = useSelector(state => state.sleepConfiguration.nightTimeSoundVolumeLevel)
@@ -35,9 +30,6 @@ export default function BedtimeSettings({ defaultSetting }) {
     const wakeLightBrightnessLevel = useSelector(state => state.sleepConfiguration.wakeLightBrightnessLevel)
     const wakeTimeSoundVolumeLevel = useSelector(state => state.sleepConfiguration.wakeTimeSoundVolumeLevel)
     const wakeLightOn = useSelector(state => state.sleepConfiguration.wakeLightOn)
-
-    const currentSleepConfig = useSelector(state => state.sleepConfiguration)
-    const defaultSleepConfig = useSelector(state => state.bedtime.defaultConfigurations)
 
     const sleepConfigurations = [
         {
@@ -111,24 +103,6 @@ export default function BedtimeSettings({ defaultSetting }) {
             />
         )
     }
-
-    // Notice: Will cause an error when the page is reloaded and the BedtimeSettingsDrawer is opened
-    // if the default config is an empty object
-    // useEffect(() => {
-    //     if ( defaultSetting && !bedtimeStart )
-    //         dispatch( setDefaultConfigurations( currentSleepConfig ) )
-
-    //     //eslint-disable-next-line    
-    // }, [])
-
-    // useEffect(() => {
-    //     return () => {
-    //         if( !defaultSetting )
-    //             dispatch( resetToDefaultAction( defaultSleepConfig ) )
-    //     }
-
-    //     //eslint-disable-next-line    
-    // }, [defaultSleepConfig])
 
     return (
         <Grid container className={classes.drawer} >

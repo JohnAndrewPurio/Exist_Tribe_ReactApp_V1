@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux'
+import { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import BedtimeSettingsDrawer from '../BedtimeSettingsDrawer'
 import MainClock from '../MainClock'
@@ -7,15 +8,16 @@ import SleepStatus from '../SleepStatus'
 import SoundBadge from './SoundBadge'
 
 import { IconButton, Grid } from '@material-ui/core'
-import { 
+import {
     Brightness1Outlined, Brightness2Outlined, Brightness3Outlined,
     Brightness4Outlined, Brightness5Outlined, Brightness6Outlined,
     KeyboardArrowUp, MusicNoteOutlined, MusicOffOutlined, SettingsBrightness,
-    WbSunnyOutlined 
+    WbSunnyOutlined
 } from '@material-ui/icons'
 import { useStyles } from './styles'
 
-import { toggleBedtimeDrawer } from '../../redux/actions/bedtime'
+import { setCurrentAudioRef, toggleBedtimeDrawer } from '../../redux/actions/bedtime'
+import { audioFiles } from '../../constants'
 
 /**
  * The Bedtime Page which consists of the sleep timer, the main clock, shortcut controls,
@@ -24,6 +26,9 @@ import { toggleBedtimeDrawer } from '../../redux/actions/bedtime'
 export default function Bedtime() {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const audioRef = useRef()
+    const currentAudioPlaying = useSelector(state => state.bedtime.currentAudioPlaying)
+    const nightTimeSoundVolume = useSelector(state => state.sleepConfiguration.nightTimeSoundVolume)
 
     const bedtimeDrawerHandler = (open) => {
         dispatch(toggleBedtimeDrawer(open))
@@ -58,15 +63,35 @@ export default function Bedtime() {
         high: <Brightness5Outlined className={classes.shortcutControls} />,
     }
 
+    useEffect(() => {
+        if (audioRef.current)
+            dispatch(setCurrentAudioRef(audioRef))
+
+        // eslint-disable-next-line 
+    }, [ audioRef.current ])
+
+    useEffect(() => {
+        if (audioRef.current)
+            audioRef.current.volume = nightTimeSoundVolume / 100
+    }, [nightTimeSoundVolume])
+
     return (
         <>
+            {
+                currentAudioPlaying
+                && <audio
+                    ref={audioRef}
+                    src={audioFiles[currentAudioPlaying]}
+                    loop
+                />
+            }
             <SleepBar />
 
             <Grid container justifyContent="center" className={classes.root} >
                 <Grid item xs={12}>
                     <Grid container justifyContent="center">
-                        <MainClock 
-                            bedtimeSoundModesIcons={bedtimeSoundModesIcons} 
+                        <MainClock
+                            bedtimeSoundModesIcons={bedtimeSoundModesIcons}
                             nightLightIcons={nightLightIcons}
                             wakeLightIcons={wakeLightIcons}
                         />
@@ -75,8 +100,8 @@ export default function Bedtime() {
 
                 <Grid item xs={12}>
                     <Grid container justifyContent="center">
-                        <SleepStatus 
-                            bedtimeSoundModesIcons={bedtimeSoundModesIcons} 
+                        <SleepStatus
+                            bedtimeSoundModesIcons={bedtimeSoundModesIcons}
                             nightLightIcons={nightLightIcons}
                             wakeLightIcons={wakeLightIcons}
                         />

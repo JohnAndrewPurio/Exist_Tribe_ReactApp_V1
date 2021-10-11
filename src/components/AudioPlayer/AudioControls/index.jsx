@@ -4,7 +4,7 @@
  * 2) Pause/Play
  * 3) Forward || Next
  */
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 import ToolTip from '../../ToolTip'
 

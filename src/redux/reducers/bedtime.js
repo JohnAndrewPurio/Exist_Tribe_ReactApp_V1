@@ -1,5 +1,6 @@
 import { 
-    HANDLE_ACCORDION_EXPANDED, SET_DEFAULT_CONFIGURATIONS, SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
+    HANDLE_ACCORDION_EXPANDED, SET_CURRENT_AUDIO_PLAYING, SET_CURRENT_AUDIO_REF, SET_DEFAULT_CONFIGURATIONS, 
+    SET_PAUSE_TIME, SET_TIME_PAUSED, START_BEDTIME, TOGGLE_BEDTIME_DRAWER 
 } from "../action_types/bedtime"
 import { defaultSleepConfigurations } from '../defaults'
 
@@ -7,6 +8,8 @@ const initState = {
     accordionExpanded: null,
     bedtimeStart: null,
     bedtimeDrawerExpanded: false,
+    currentAudioPlaying: null,
+    currentAudioRef: null,
     defaultSleepConfigurations,
     pauseTime: null,
     timePaused: 0
@@ -16,6 +19,8 @@ export default function reducer(state = initState, action) {
     const {type, payload} = action
     const selector = {}
     
+    selector[SET_CURRENT_AUDIO_PLAYING] = setCurrentAudioPlaying
+    selector[SET_CURRENT_AUDIO_REF] = setCurrentAudioRef
     selector[SET_DEFAULT_CONFIGURATIONS] = setDefaultConfigurations
     selector[HANDLE_ACCORDION_EXPANDED] = handleAccordionExpanded
     selector[SET_PAUSE_TIME] = setPauseTime
@@ -30,6 +35,14 @@ export default function reducer(state = initState, action) {
 
 function handleAccordionExpanded(state, payload) {
     return {...state, accordionExpanded: payload}
+}
+
+function setCurrentAudioPlaying(state, payload) {
+    return {...state, currentAudioPlaying: payload}
+}
+
+function setCurrentAudioRef(state, payload) {
+    return {...state, currentAudioRef: payload}
 }
 
 function setDefaultConfigurations(state, payload) {

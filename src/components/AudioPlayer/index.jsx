@@ -7,7 +7,6 @@
  * Bonus:
  *  Animate the appearance and disappearance of the Audio Player
  */
-import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import AudioControls from './AudioControls'
@@ -15,7 +14,6 @@ import AudioControls from './AudioControls'
 import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './styles'
 
-import { audioFiles } from '../../constants'
 
 /**
  * Creates an Audio Player which displays the current Audio Playing with Pause/Play toggle and an Exit Button
@@ -23,40 +21,28 @@ import { audioFiles } from '../../constants'
  */
 export default function AudioPlayer() {
     const classes = useStyles()
-    const audioRef = useRef()
-    const nightTimeAudio = useSelector(state => state.sleepConfiguration.nightTimeAudio)
-    const wakeTimeAudio = useSelector(state => state.sleepConfiguration.wakeTimeAudio)
-    const nightTimeSoundVolume = useSelector(state => state.sleepConfiguration.nightTimeSoundVolume)
-
-    useEffect(() => {
-        if(audioRef.current)
-            audioRef.current.volume = nightTimeSoundVolume / 100
-    }, [ nightTimeSoundVolume ])
+    const currentAudioPlaying = useSelector(state => state.bedtime.currentAudioPlaying)
+    const currentAudioRef = useSelector(state => state.bedtime.currentAudioRef)
 
     return (
         <>
-            {
-                nightTimeAudio 
-                && <audio 
-                        ref={ audioRef }
-                        src={ audioFiles[nightTimeAudio] } 
-                        loop 
-                    />
-            }
             <Grid item className={classes.containerBlock} xs={12}>
                 <Grid container justifyContent="center">
                     <Typography variant="h6" className={classes.musicName}>
                         {
-                            nightTimeAudio || 'No Sound Selected'
+                            currentAudioPlaying || 'No Sound Selected'
                         }
                     </Typography>
                 </Grid>
             </Grid>
-            <Grid item className={classes.containerBlock} xs={12}>
-                <Grid container justifyContent="center">
-                    <AudioControls currentAudio={audioRef} />
+            {
+                currentAudioRef &&
+                <Grid item className={classes.containerBlock} xs={12}>
+                    <Grid container justifyContent="center">
+                        <AudioControls currentAudio={currentAudioRef} />
+                    </Grid>
                 </Grid>
-            </Grid>
+            }
         </>
     )
 }

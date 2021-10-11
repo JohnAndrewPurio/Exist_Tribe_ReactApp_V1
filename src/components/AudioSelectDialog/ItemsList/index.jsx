@@ -12,8 +12,6 @@ let timer = null
 
 /**
  * Maps the available audio filenames and handle the click event of each item and test pause/play
- * @param {Object} props - props passed by the parent component 
- * @param {Array<string>} props.fileNames - array of available audio filenames
  * @param {string} props.settingName - either wakeTimeSound or nightTimeSound
  * @returns MaterialUIList - contains Audio Items that can be selected or tested
  */
@@ -47,11 +45,7 @@ export default function ItemsList({ settingName }) {
             return
         }
 
-        const targetAudio = new Audio(audioFiles[audioName])
-
-        dispatch(setCurrentAudioPlayingAction({
-            targetAudio, audioName
-        }))
+        dispatch( setCurrentAudioPlayingAction(audioName) )
     }
 
     const resetAudio = (targetAudio) => {

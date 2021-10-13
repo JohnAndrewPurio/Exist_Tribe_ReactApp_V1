@@ -1,8 +1,5 @@
-import {
-  useSelector
-} from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import AudioSelectDialog from './components/AudioSelectDialog'
 import Bedtime from './components/Bedtime'
 import Home from './components/Home'
 
@@ -12,7 +9,6 @@ import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
 
 export default function App() {
-  const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
   const darkTheme = useSelector(state => state.appConfig.darkTheme)
 
   const theme = createTheme({
@@ -47,7 +43,6 @@ export default function App() {
         <Route path="/" component={Home} />
       </Switch>
 
-      <AudioSelectDialog settingName={accordionExpanded} />
     </ThemeProvider>
   )
 }

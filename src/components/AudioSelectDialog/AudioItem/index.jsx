@@ -7,7 +7,7 @@ export default function AudioItem({ audioName, handleListItemClick, testCurrentA
     const currentAudioPlaying = useSelector(state => state.appConfig.currentAudioPlaying)
     const play = audioName
     const pause = null
-    const testParam = currentAudioPlaying && audioName === currentAudioPlaying.audioName ? pause: play 
+    const testParam = currentAudioPlaying && audioName === currentAudioPlaying ? pause : play
 
     return (
         <ListItem
@@ -19,12 +19,15 @@ export default function AudioItem({ audioName, handleListItemClick, testCurrentA
                 <IconButton
                     edge="end"
                     aria-label="play"
-                    onClick={() => testCurrentAudio(audioName)}
+                    onClick={() => testCurrentAudio( testParam )}
                 >
                     {
-                        testParam ?
+                        !testParam ?
+                            <Pause />
+                        : !currentAudioPlaying ?
                             <PlayArrow />
-                            : <Pause />
+                        : <></>
+
                     }
                 </IconButton>
             </ListItemSecondaryAction>

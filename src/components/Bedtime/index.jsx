@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AudioSelectDialog from '../AudioSelectDialog'
 import BedtimeSettingsDrawer from '../BedtimeSettingsDrawer'
 import MainClock from '../MainClock'
 import SleepBar from '../SleepBar'
@@ -27,6 +28,7 @@ export default function Bedtime() {
     const classes = useStyles()
     const dispatch = useDispatch()
     const audioRef = useRef()
+    const accordionExpanded = useSelector(state => state.bedtime.accordionExpanded)
     const currentAudioPlaying = useSelector(state => state.bedtime.currentAudioPlaying)
     const nightTimeSoundVolume = useSelector(state => state.sleepConfiguration.nightTimeSoundVolume)
 
@@ -64,16 +66,25 @@ export default function Bedtime() {
     }
 
     useEffect(() => {
+        console.log('Current Audio:')
+        console.log(currentAudioPlaying)
+
+        if(!currentAudioPlaying) {
+            dispatch( setCurrentAudioRef(null) )
+
+            return
+        }
+
         if (audioRef.current)
-            dispatch(setCurrentAudioRef(audioRef))
+            dispatch( setCurrentAudioRef(audioRef) )
 
         // eslint-disable-next-line 
-    }, [ audioRef.current ])
+    }, [ currentAudioPlaying ])
 
     useEffect(() => {
         if (audioRef.current)
             audioRef.current.volume = nightTimeSoundVolume / 100
-    }, [nightTimeSoundVolume])
+    }, [ nightTimeSoundVolume ])
 
     return (
         <>
@@ -122,6 +133,8 @@ export default function Bedtime() {
             </Grid>
 
             <BedtimeSettingsDrawer />
+            <AudioSelectDialog settingName={accordionExpanded} />
+
         </>
     )
 }

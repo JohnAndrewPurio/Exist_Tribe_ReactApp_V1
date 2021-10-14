@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 
 import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@material-ui/core'
 import { useStyles } from './styles'
+import { useSelector } from 'react-redux'
 
 import { NIGHT_LIGHT, WAKE_LIGHT } from '../../../constants'
 import { handleAccordionExpanded } from '../../../redux/actions/bedtime'
@@ -21,6 +22,10 @@ export default function AccordionMenu({ config, expanded, lightOn }) {
 
     const { name, summary, content, icon } = config
 
+    const wakeLightOn = useSelector(state => state.sleepConfiguration.wakeLightOn)
+    const nightLightOn = useSelector(state => state.sleepConfiguration.nightLightOn)
+
+
     const accordionHandler = (targetAccordion) => {
         if (lightOn !== undefined && name === WAKE_LIGHT) {
             dispatch(wakeLightStatusAction(!lightOn))
@@ -36,7 +41,25 @@ export default function AccordionMenu({ config, expanded, lightOn }) {
         if (targetAccordion === expanded)
             targetAccordion = null
 
-        dispatch( handleAccordionExpanded(targetAccordion) )
+        dispatch(handleAccordionExpanded(targetAccordion))
+    }
+
+    const getAccordionStyle = () => {
+        switch (name) {
+            case WAKE_LIGHT:
+                if (wakeLightOn) {
+                    return { border: '5px solid white' }
+                }
+                break;
+            case NIGHT_LIGHT:
+                if (nightLightOn) {
+                    return { border: '5px solid white' }
+                }
+                break;
+            default:
+                return {}
+        }
+        return {}
     }
 
     return (
@@ -44,6 +67,7 @@ export default function AccordionMenu({ config, expanded, lightOn }) {
             className={classes.accordionMenu}
             expanded={lightOn === undefined ? expanded === name : lightOn}
             onChange={() => accordionHandler(name)}
+            style={getAccordionStyle()}
         >
             <AccordionSummary
                 expandIcon={icon}

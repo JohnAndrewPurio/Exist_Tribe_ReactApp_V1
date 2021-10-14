@@ -72,7 +72,7 @@ export const useStyles = makeStyles((theme) => ({
     soundSettings: {
         width: containerBlockWidth,
         padding: theme.spacing(2),
-        backgroundColor: theme.palette.primary.dark
+        backgroundColor: theme.palette.secondary.dark
     },
 
     containerBlock: {
@@ -81,17 +81,19 @@ export const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-around',
         padding: theme.spacing(3),
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.secondary.dark,
         // alignItems: 'center'
     },
 
     drawer: {
         // maxHeight: 1.5 * containerBlockWidth,
-        overflowY: 'auto'
+        overflowY: 'auto',
+        backgroundColor: "#303030"
     },
 
     itemBlock: {
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        margin: `${theme.spacing(2)}px auto`
     },
 
     muteButton: {
@@ -105,7 +107,8 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     contrastText: {
-        color: theme.palette.primary.contrastText
+        color: theme.palette.primary.contrastText,
+        fontWeight: 600
     },
 
     timePickerPaper: {

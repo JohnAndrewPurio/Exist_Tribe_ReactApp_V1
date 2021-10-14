@@ -12,6 +12,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
+import "@fontsource/open-sans";
 
 // import { theme } from './styles'
 
@@ -36,7 +37,7 @@ export default function App() {
 
   const theme = createTheme({
     typography: {
-      fontFamily: ['Georgia', 'Open Sans'].join(',')
+      fontFamily: ['Poppins', 'Open Sans', 'Georgia'].join(',')
     },
 
     palette: {
@@ -50,7 +51,7 @@ export default function App() {
       secondary: {
         light: '#f3f1f1',
         main: '#bfbfbf',
-        dark: '#999999',
+        dark: '#404040',
         contrastText: '#3b4422',
       },
 

@@ -7,6 +7,7 @@ import { Grid, Paper, Tab, Tabs, Typography, useTheme } from '@material-ui/core'
 import { AccessTime, Audiotrack, Flare } from '@material-ui/icons'
 import { useStyles } from './styles'
 import SwipeableViews from 'react-swipeable-views'
+import LightTab from '../LightTab'
 
 let timerInterval = 0
 
@@ -38,6 +39,8 @@ export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wak
                 onChange={handleChangeValue}
                 aria-label="dashboard tabs"
                 centered
+                indicatorColor="primary"
+                textColor="primary"
             >
                 <Tab icon={<Flare />} aria-label="Light" />
                 <Tab icon={<AccessTime />} aria-label="Main Controls" />
@@ -49,13 +52,10 @@ export default function MainClock({ bedtimeSoundModesIcons, nightLightIcons, wak
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={value}
                     onChangeIndex={handleChangeIndex}
+                    style={{width: "100%"}}
                 >
                     <TabPanel value={value} index={0} dir={theme.direction}>
-                        <Clock
-                            bedtimeSoundModesIcons={bedtimeSoundModesIcons}
-                            nightLightIcons={nightLightIcons}
-                            wakeLightIcons={wakeLightIcons}
-                        />
+                        <LightTab />
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
                         <Clock
@@ -88,7 +88,7 @@ function Clock({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
     }, [])
 
     return (
-        <>
+        <Grid className={classes.clockContainer}>
             <Grid item className={classes.containerBlock} xs={12} >
                 <Grid container alignItems="center" justifyContent="center">
                     <Typography variant="h3">{time}</Typography>
@@ -104,7 +104,7 @@ function Clock({ bedtimeSoundModesIcons, nightLightIcons, wakeLightIcons }) {
                     />
                 </Grid>
             </Grid>
-        </>
+        </Grid>
     )
 }
 
@@ -116,6 +116,7 @@ function TabPanel({ children, value, index, ...other }) {
             id={`full-width-tabpanel-${index}`}
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
+            style={{height: "100%", overflow: "hidden"}}
         >
             {value === index && (
                 <>

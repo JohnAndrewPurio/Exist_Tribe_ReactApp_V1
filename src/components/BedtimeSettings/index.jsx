@@ -18,6 +18,7 @@ import { WAKE_TIME_SOUND, NIGHT_TIME_SOUND, WAKE_LIGHT, NIGHT_LIGHT } from '../.
 * @param {boolean} props.defaultSetting - True if it is the default settings at Home(Main Dashboard) else false(Settings Drawer)
 * @return {JSX} MaterialUiGrid - Container of all the settings to configure volume levels, brightness levels and other stuff
 **/
+
 export default function BedtimeSettings({ defaultSetting }) {
     const classes = useStyles()
 

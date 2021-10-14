@@ -13,8 +13,8 @@ export const useStyles = makeStyles((theme) => ({
 
     fab: {
         position: 'fixed',
-        bottom: theme.spacing(3),
+        bottom: `calc(${theme.spacing(5)}px + 20px)`,
         right: theme.spacing(3),
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.primary.main,
     }
 }))

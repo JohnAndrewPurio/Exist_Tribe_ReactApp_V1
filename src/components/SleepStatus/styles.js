@@ -11,6 +11,6 @@ export const useStyles = makeStyles((theme) => ({
         width: containerBlockWidth,
         height: 325,
         padding: theme.spacing(2),
-        backgroundColor: theme.palette.primary.dark
+        backgroundColor: theme.palette.secondary.dark
     }
 }))

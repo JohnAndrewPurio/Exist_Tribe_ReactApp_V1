@@ -1,0 +1,8 @@
+{
+	"appId": "io.ionic.restnode",
+	"appName": "restnode",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "build",
+	"cordova": {}
+}

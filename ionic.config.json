@@ -1,5 +1,5 @@
 {
-    "name": "restnode",
+    "name": "rest_node_react",
     "integrations": {
       "capacitor": {}
     },

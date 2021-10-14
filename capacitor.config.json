@@ -1,6 +1,6 @@
 {
-    "appId": "io.ionic.restnode",
-    "appName": "restnode",
+    "appId": "io.ionic.rest_node_react",
+    "appName": "rest-node-react",
     "bundledWebRuntime": false,
     "npmClient": "npm",
     "webDir": "build",

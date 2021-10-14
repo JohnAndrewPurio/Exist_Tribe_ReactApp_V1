@@ -17,30 +17,34 @@ let timer = null
  */
 export default function ItemsList({ settingName }) {
     const dispatch = useDispatch()
-    const currentAudioPlaying = useSelector(state => state.appConfig.currentAudioPlaying)
+    const currentAudioRef = useSelector(state => state.bedtime.currentAudioRef)
 
     const handleListItemClick = (audioName) => {
         const audioAction = settingName === NIGHT_TIME_SOUND ? nightTimeAudioAction : wakeTimeAudioAction
 
-        if (currentAudioPlaying) {
-            currentAudioPlaying.targetAudio.pause()
-            dispatch(setCurrentAudioPlayingAction(null))
+        if (currentAudioRef && currentAudioRef.current) {
+            currentAudioRef.current.pause()
+            dispatch( setCurrentAudioPlayingAction(null) )
         }
 
         dispatch(
             audioAction(audioName)
         )
+
         dispatch(
             toggleSoundSelectorAction(null)
         )
     }
 
     const testCurrentAudio = (audioName) => {
-        if (currentAudioPlaying !== null)
-            currentAudioPlaying.targetAudio.pause()
-
+        if (currentAudioRef && currentAudioRef.current) {
+            resetAudio( currentAudioRef.current )
+        }
+        
         if (!audioName) {
-            dispatch(setCurrentAudioPlayingAction(null))
+            dispatch(
+                setCurrentAudioPlayingAction(null)
+            )
 
             return
         }
@@ -49,7 +53,12 @@ export default function ItemsList({ settingName }) {
     }
 
     const resetAudio = (targetAudio) => {
-        dispatch(setCurrentAudioPlayingAction(null))
+        console.log('fired')
+
+        dispatch(
+            setCurrentAudioPlayingAction(null)
+        )
+
         targetAudio.pause()
     }
 
@@ -59,18 +68,17 @@ export default function ItemsList({ settingName }) {
             timer = null
         }
 
-        if (!currentAudioPlaying)
+        if (!currentAudioRef || !currentAudioRef.current)
             return
 
-        const { targetAudio } = currentAudioPlaying
-        targetAudio.play()
+        currentAudioRef.current.play()
 
         timer = setTimeout(() => {
-            resetAudio(targetAudio)
+            resetAudio(currentAudioRef.current)
         }, 10000)
 
         // eslint-disable-next-line
-    }, [currentAudioPlaying])
+    }, [currentAudioRef])
 
     return (
         <List component="nav" aria-label="secondary mailbox folder">

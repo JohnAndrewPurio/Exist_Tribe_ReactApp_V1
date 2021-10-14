@@ -12,6 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     list: {
+        marginTop: theme.spacing(2),
         minWidth: 200
     }
 }))

@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme) => ({
     appBar: {
-        backgroundColor: theme.palette.primary.dark
+        backgroundColor: theme.palette.secondary.dark,
+        paddingTop: "50px"
     },
     
     root: {

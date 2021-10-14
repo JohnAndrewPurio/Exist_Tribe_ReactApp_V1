@@ -5,7 +5,7 @@ export const useStyles = makeStyles((theme) => ({
     paper: {
         width: containerBlockWidth,
         padding: theme.spacing(1),
-        backgroundColor: theme.palette.primary.dark,
+        backgroundColor: theme.palette.secondary.dark,
         color: theme.palette.primary.contrastText
     },
 
@@ -27,5 +27,10 @@ export const useStyles = makeStyles((theme) => ({
     containerBlock: {
         padding: theme.spacing(1),
         margin: theme.spacing(1),
+        marginTop: theme.spacing(2)
+    },
+
+    clockContainer: {
+        height: "100%"
     }
 }))

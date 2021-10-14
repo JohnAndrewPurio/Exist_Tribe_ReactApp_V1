@@ -1,0 +1,11 @@
+{
+	"appId": "io.ionic.restnode",
+	"appName": "restnode",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "build",
+	"cordova": {},
+	"server": {
+		"url": "http://192.168.100.32:8100"
+	}
+}

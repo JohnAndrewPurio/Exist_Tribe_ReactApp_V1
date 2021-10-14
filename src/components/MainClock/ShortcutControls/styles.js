@@ -6,6 +6,9 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     shortcutControlsGroup: {
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        width: "70%",
+        display: "flex",
+        justifyContent: "space-evenly"
     }
 }))

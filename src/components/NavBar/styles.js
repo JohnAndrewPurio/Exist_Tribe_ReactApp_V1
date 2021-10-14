@@ -4,10 +4,10 @@ import { containerBlockWidth } from '../../constants'
 export const useStyles = makeStyles((theme) => ({
     appBar: {
         width: containerBlockWidth,
-        margin: `${theme.spacing(2)}px auto`,
+        margin: `80px auto ${theme.spacing(2)}px auto`,
         borderRadius: '999vmin',
         padding: '4px',
-        backgroundColor: theme.palette.primary.dark
+        backgroundColor: theme.palette.secondary.dark,
     },
 
     root: {

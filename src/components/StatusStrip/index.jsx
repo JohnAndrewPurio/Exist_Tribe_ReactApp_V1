@@ -3,7 +3,7 @@ import { useStyles } from './styles'
 
 export default function StatusStrip({ type, icon, text, toggledOn, }) {
     const classes = useStyles()
-    const buttonColor = type === 'night' ? 'primary': 'secondary'
+    const buttonColor = type === 'night' ? 'primary': 'secondary.light'
 
     return (
         <Grid item xs={12} className={!toggledOn ? classes.hidden: classes.placeHolder}>
